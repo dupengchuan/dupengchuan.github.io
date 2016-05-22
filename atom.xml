@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-05-22T07:37:04.635Z</updated>
+  <updated>2016-05-22T07:38:31.796Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,15 +20,11 @@
     <link href="http://yoursite.com/2016/05/22/resume/"/>
     <id>http://yoursite.com/2016/05/22/resume/</id>
     <published>2016-05-22T07:36:44.000Z</published>
-    <updated>2016-05-22T07:37:04.635Z</updated>
+    <updated>2016-05-22T07:38:31.796Z</updated>
     
-    <content type="html">&lt;p&gt;hello world!&lt;/p&gt;
-</content>
+    <content type="html"></content>
     
     <summary type="html">
-    
-      &lt;p&gt;hello world!&lt;/p&gt;
-
     
     </summary>
     
