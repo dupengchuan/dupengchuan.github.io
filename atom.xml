@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Kevin</title>
+  <title>Kevin&#39; blog</title>
   
   <link href="/atom.xml" rel="self"/>
   
@@ -9,7 +9,7 @@
   <id>http://dupengchuan.github.io/</id>
   
   <author>
-    <name>kevin</name>
+    <name>Kevin</name>
     
   </author>
   
