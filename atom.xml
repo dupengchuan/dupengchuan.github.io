@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-22T08:20:25.661Z</updated>
+  <updated>2016-05-22T14:00:51.278Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -14,32 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://dupengchuan.github.io/2016/05/22/resume/"/>
-    <id>http://dupengchuan.github.io/2016/05/22/resume/</id>
-    <published>2016-05-22T07:36:44.609Z</published>
-    <updated>2016-05-22T08:20:25.661Z</updated>
-    
-    <content type="html">&lt;p&gt;很早就想有一个自己的博客，今天终于初步搭建好了。&lt;/p&gt;
-&lt;p&gt;使用的是github pages托管网页,一个静态博客。&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：&lt;a href=&quot;http://hexo.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hexo.io&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;主题使用简约风格的是even，连接：&lt;a href=&quot;https://link.zhihu.com/?target=https%3A//github.com/ahonn/hexo-theme-even&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://link.zhihu.com/?target=https%3A//github.com/ahonn/hexo-theme-even&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;争取以后养成写博客的习惯&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://n1.itc.cn/img8/wb/smccloud/recom/2015/09/06/144154649059751427.JPEG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;很早就想有一个自己的博客，今天终于初步搭建好了。&lt;/p&gt;
-&lt;p&gt;使用的是github pages托管网页,一个静态博客。&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：&lt;a href=&quot;http://hexo.io&quot; target=&quot;
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Hello World</title>
