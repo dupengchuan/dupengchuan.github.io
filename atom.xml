@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-23T08:37:29.103Z</updated>
+  <updated>2016-05-23T08:38:44.672Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -16,46 +16,16 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>test</title>
-    <link href="http://dupengchuan.github.io/2016/05/23/test/"/>
-    <id>http://dupengchuan.github.io/2016/05/23/test/</id>
-    <published>2016-05-23T08:31:56.000Z</published>
-    <updated>2016-05-23T08:37:29.103Z</updated>
-    
-    <content type="html">&lt;p&gt;最近在改一个 Hexo 的主题 apollo。然后看到这个主题用的是叫做 Jade 的模版引擎写的。之前了解过几个模版引擎 ejs，swig 什么的，但是这些都是在原有的 HTML 中插标签，看起来有点乱。看到 Jade 后就深深的被它那如同 Python 的缩进语法深深吸引了，遂上网学习一发。&lt;/p&gt;
-&lt;p&gt;Jade 是 JavaScript 实现的，供 Node 使用，原生支持 Express。但也有 PHP，Python 等其他语言的实现。（要是 HTML 模版用 Jade，CSS 用 Styl，后端用 Python，那岂不是很好玩~全是缩进缩进缩进=。=）&lt;/p&gt;
-&lt;p&gt;DOCTYPE&lt;/p&gt;
-&lt;p&gt;添加文档类型可以通过 !!! 或者 doctype 来添加。&lt;/p&gt;
-&lt;p&gt;标签、属性&lt;/p&gt;
-&lt;p&gt;Jade 写起来就跟在 Sublime Text 中用 Emmet 写 HTML 一样。标签直接写，Class 用 .，ID 用 #。不同的是，层级关系 Jade 使用缩进表示，类似于 Python，而 Emmet 插件的写法是只有一行的。结果写出来就是这个样子滴：&lt;/p&gt;
-&lt;p&gt;doctype html&lt;br&gt;html&lt;br&gt;    head.class&lt;br&gt;        title&lt;br&gt;    body#id&lt;br&gt;渲染出来的结果:&lt;/p&gt;
-&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/p&gt;
-&lt;p&gt;&lt;html&gt;&lt;br&gt;  &lt;head class=&quot;class&quot;&gt;&lt;br&gt;    &lt;title&gt;&lt;/title&gt;&lt;br&gt;  &lt;/head&gt;&lt;br&gt;  &lt;body id=&quot;id&quot;&gt;&lt;br&gt;  &lt;/body&gt;&lt;br&gt;&lt;/html&gt;&lt;br&gt;看起来超级简洁，而且都不需要去写闭合标签。不过比较需要注意缩进，坏处就是如果复制代码过来的话可能需要重新人脑格式化一下。&lt;/p&gt;
-&lt;p&gt;那么问题来了，其他属性怎么办？不是 Class 和 id 的话，就可以在 标签后面加个括号，写在括号里面。当属性值 undefined 或者 null 时，该属性将不会编译。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近在改一个 Hexo 的主题 apollo。然后看到这个主题用的是叫做 Jade 的模版引擎写的。之前了解过几个模版引擎 ejs，swig 什么的，但是这些都是在原有的 HTML 中插标签，看起来有点乱。看到 Jade 后就深深的被它那如同 Python 的缩进语法深深吸
-    
-    </summary>
-    
-    
-      <category term="life" scheme="http://dupengchuan.github.io/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Hello World</title>
     <link href="http://dupengchuan.github.io/2016/05/22/hello-world/"/>
     <id>http://dupengchuan.github.io/2016/05/22/hello-world/</id>
     <published>2016-05-22T05:18:13.523Z</published>
-    <updated>2016-05-23T08:31:18.142Z</updated>
+    <updated>2016-05-23T08:38:44.672Z</updated>
     
     <content type="html">&lt;p&gt;很早就想有一个自己的博客，今天终于初步搭建好了。&lt;/p&gt;
 &lt;p&gt;使用的是github pages托管网页,一个静态博客。&lt;/p&gt;
 &lt;p&gt;Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：&lt;a href=&quot;http://hexo.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hexo.io&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;主题使用的是even，连接：&lt;a href=&quot;https://github.com/ahonn/hexo-theme-even&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/ahonn/hexo-theme-even&lt;/a&gt;，在此谢谢ahonn,一位少年大神。&lt;/p&gt;
+&lt;p&gt;主题使用的是even，连接：&lt;a href=&quot;https://github.com/ahonn/hexo-theme-even&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/ahonn/hexo-theme-even&lt;/a&gt;，在此谢谢ahonn,一位大神。&lt;/p&gt;
 &lt;p&gt;争取以后养成写博客的习惯&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://n1.itc.cn/img8/wb/smccloud/recom/2015/09/06/144154649059751427.JPEG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 </content>
