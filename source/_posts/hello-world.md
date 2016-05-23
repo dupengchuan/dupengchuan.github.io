@@ -1,37 +1,15 @@
 title: Hello World
+layout: about
+
 ---
-Welcome to [Hexo](http://hexo.io/)! This is your very first post. Check [documentation](http://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](http://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+很早就想有一个自己的博客，今天终于初步搭建好了。
 
-## Quick Start
+使用的是github pages托管网页,一个静态博客。<br>
 
-### Create a new post
+Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：[http://hexo.io](http://hexo.io)<br>
 
-``` bash
-$ hexo new "My New Post"
-```
+主题使用简约风格的是even，连接：[https://github.com/ahonn/hexo-theme-even](https://github.com/ahonn/hexo-theme-even)
 
-More info: [Writing](http://hexo.io/docs/writing.html)
+争取以后养成写博客的习惯
 
-### Run server
-
-``` bash
-$ hexo server
-```
-
-More info: [Server](http://hexo.io/docs/server.html)
-
-### Generate static files
-
-``` bash
-$ hexo generate
-```
-
-More info: [Generating](http://hexo.io/docs/generating.html)
-
-### Deploy to remote sites
-
-``` bash
-$ hexo deploy
-```
-
-More info: [Deployment](http://hexo.io/docs/deployment.html)
+![](http://n1.itc.cn/img8/wb/smccloud/recom/2015/09/06/144154649059751427.JPEG)
