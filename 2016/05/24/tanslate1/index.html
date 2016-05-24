@@ -1,0 +1,40 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>什么时候的操作系统才运行? · Kevin' blog</title><meta name="description" content="什么时候的操作系统才运行? - Kevin"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/style.css"><!-- fonts--><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="http://fonts.lug.ustc.edu.cn/css?family=Source+Sans+Pro:400,600" type="text/css"><!-- baidu analytics--><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3da6a058b90a794d9abcb126661965af";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><!-- google analytics--><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74273646-1', 'auto');
+ga('send', 'pageview');</script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="http://weibo.com/ahonn"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archive</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">什么时候的操作系统才运行?</h1><div class="post-time">May 24, 2016</div><div class="post-content"><blockquote>
+<p>这是博文来自于<a href="http://duartes.org/gustavo/blog/" target="_blank" rel="external">Gustavo Duarte</a>博客，本人出于兴趣翻译过来，原文：<a href="http://duartes.org/gustavo/blog/post/when-does-your-os-run/" target="_blank" rel="external">When Does Your OS Run?</a></p>
+</blockquote>
+<p>这里有一个问题，在你阅读到我这篇博文中的这句话的时候，你的操作系统是否在运行？还是只有浏览器在运行？还是它们都出于空闲状态，正在等待你分配任务？</p>
+<p>这些问题虽然简单但却贯穿整个软件运行过程。为了准确地回答这些问题，在大脑中我们必须对操作系统行为有一个好的模型，即操作系统依次通知进程执行，安全方面以及故障的决策。希望通过这一些列博文，我们能够在脑海里建立这么一种模型。本文主要使用Linux作为主要的操作系统，OS X和Windows也会偶尔出现。某些地方我会附上源码以方便那些想要深入研究的人。</p>
+<p>有一个基本公理：即在任何时刻，在CPU上有且仅有一个任务在运行。这个任务通常是一个进程，像浏览器，音乐播放器等等，但是也有可能是操作系统线程，但是它是一个任务。不能是两个或者多个，也不会是0个。</p>
+<p>这个听起来很抽象，举个栗子，如果你的音乐播放器一直占用着CPU,并且不让然和其他任务使用，这种情况，你甚至都不能打开一个工具（Windows是任务管理器，Linux使用shell命令）去杀死它，此时移动或者点击鼠标都是无效的，因为操作系统不会让它们执行，那么你可能被一直卡在”The fox”（一首歌的名字）。</p>
+<p>以上便是中断的由来。就像神经系统打断大脑的正常运行，带来外界的刺激，一声巨响或者拍一下肩膀。主板上的芯片为了传达外部事件（按下键盘，网络数据包到达，硬盘读取完毕等等）也会中断CPU。硬件外设、中断控制器以及CPU一起完成中断过程。</p>
+<p>控制任务执行时间是通过中断实现的。在系统启动过程中，内核启动一个定时器周期性的发出中断请求，比如10ms一次。当一个中断发生后，CPU执行中断处理程序，更新系统的状态，观察一些事件，比如是否当前进程执行时间超过了时间片？TCP连接是否超时？中断给了内核一个机会思考这些问题并采取合适的行动去解决。这就像你设置了全天定时报警，作为时间点提醒你去思考：我现在应该做什么？是否有更重要的事情做？</p>
+<p>内核通过中断周期性地劫持占有CPU,中断使操作系统像时钟一样滴答滴答地运行。但不止这些，中断也用来处理一些软件事件，比如整数溢出和缺页错误，这些中断没有外部硬件的参与。中断是进入系统内核最重要和最频繁的入口，因此很多电子工程师对中断作为操作系统运行的机制表示担心。</p>
+<p>不说废话了，让我们来一些实际行动。下面是一个基于英特尔酷睿i5的网卡中断过程。现在该图有，图片有链接，点击获得更多信息。例如从设备到它的linux驱动。</p>
+<p><img src="http://duartes.org/gustavo/blog/img/os/hardware-interrupt.png" alt=""></p>
+<p>我们来看看这张图。首先，由于有很多中断源，如果硬件只是告诉CPU:嗨，有事情发生了！然后离开，CPU也不知道发生了什么，显然这不会有多大的实际意义。因此每个设备被安排了一个中断请求路线(LRQ)。所有的中断请求都会到达中断请求控制器，中断请求控制器根据LRQ依次将中断请求映射为中断向量（0-255表示）。当中断到达CPU,CPU面对的是一个友好的明确的中断向量。而不是各种各样的外部硬件。</p>
+<p>反过来，CPU有一个指向255个函数数组的指针，这些函数被内核支持，每一个函数对应一个特定的中断向量。在后面我们将会看到这个数组—中断描述符表（IDT）。</p>
+<p>每当一个中断到达，CPU使用它的中断向量作为索引进入IDT然后运行相应的中断处理函数。这是一个特殊的函数调用因为发生在当前运行任务的上下文，允许操作系统以最小的开销去响应外部事件。因此web服务器如果在向你发送数据的时候调用一个函数，这是不是很酷或者很可怕？下面我们展示一个场景：CPU正在运行一个Vim命令时，来了一个中断。</p>
+<p><img src="http://duartes.org/gustavo/blog/img/os/vim-interrupted.png" alt=""></p>
+<p>注意中断的到来如何导致内核模式和ring 0的切换，但是不会改变活动任务。这就好像Vim变魔术一般调用一个函数直接进入内核。但是Vim依然在这里，它的地址空间没有变，静静的等待函数返回。</p>
+<p>终于要写完了，兴奋的时刻！，哈哈，我知道我还没有回答那个开放问题，并且还引入了新问题。但是当你读到我这句话的时候，如果你仍旧怀疑操作系统到底是什么状态。相信你可以找到答案,因为我们之前已经讲解了了操作系统的动态运行模型。这个浏览器的问题也变得清晰了。如果你还有问题，尤其是这个博文发表之后，我会尽快在博文里面或者评论里面回答你的问题。之后的会在RSS和Twitter上做解答。</p>
+</div></article></div><script src="./js/back2top.js"></script></section><footer><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//dupengchuan.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script><div class="copyright"><p>© 2016<span class="heart"><i class="icon-next-heart fa fa-heart"></i></span><a href="http://dupengchuan.github.io">Kevin</a></p></div></footer></div><label for="sidebar-toggle" class="sidebar-menu"><i class="fa fa-bars"></i></label><label id="back2top"> <i class="fa fa-chevron-up"></i></label></body></html>
