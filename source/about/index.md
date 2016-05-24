@@ -11,3 +11,4 @@ BUPT 计算机学院
 
 # Resume #
 
+[我的简历](http://dupengchuan.github.io/resume)
