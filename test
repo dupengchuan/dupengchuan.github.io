@@ -1,0 +1,7 @@
+#!/bin/bash
+cd themes/hexo-theme-even
+gulp less
+cd ../../
+hexo clean
+hexo g
+hexo s
