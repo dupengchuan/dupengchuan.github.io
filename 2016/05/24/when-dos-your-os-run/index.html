@@ -9,7 +9,7 @@
 <p>这篇博文来自于<a href="http://duartes.org/gustavo/blog/" target="_blank" rel="external">Gustavo Duarte</a>的科普博客，本人出于兴趣翻译过来，原文：<a href="http://duartes.org/gustavo/blog/post/when-does-your-os-run/" target="_blank" rel="external">When Does Your OS Run?</a></p>
 </blockquote>
 <p>这里有一个问题，就是在你阅读到我这篇博文中的这句话的时候，你的操作系统是否正在运行？还是只有浏览器在运行？还是它们都处于空闲状态，正在等待你分配任务？</p>
-<p>这些问题虽然简单但却深入到整个软件运行过程。为了准确地回答这些问题，我们要在大脑中对操作系统行为有一个良好的运行状态模型，即操作系统依次通知进程执行，安全方面以及故障的决策。希望通过这一些列博文，我们能够在脑海里建立起这种模型。本文主要使用Linux作为主要的操作系统，OS X和Windows也会偶尔出现。某些地方我会附上源码链接以方便那些想要深入研究的人。</p>
+<p>这些问题虽然简单但却深入到整个软件运行过程。为了准确地回答这些问题，我们要在大脑中对操作系统行为有一个良好的运行状态模型，即操作系统依次通知进程执行，安全方面以及故障的决策。希望通过这一些列博文，我们能够在脑海里建立起这种模型。本文主要使用Linux作为主要的操作系统，OS X和Windows也会偶尔出现。某些地方我会附上源码链接以方便那些想要深入研究的人。<br><a id="more"></a></p>
 <p>有一个基本公理：即在任何时刻，在CPU上有且仅有一个任务在运行。这个任务通常是一个进程，像浏览器，音乐播放器等等，但是也有可能是操作系统线程，但它也是一个任务。同一时刻CPU上的任务不可能是两个或者多个，也不会是0个。</p>
 <p>这个听起来很抽象，举个例子，如果你的音乐播放器一直占用着CPU,并且不让其他任务占有，这种情况，你不能打开一个工具（Windows是任务管理器，Linux使用shell命令）去杀死它，此时移动或者点击鼠标都是无效的，因为操作系统不会让它们执行，那么你可能被一直卡在”The fox”（一首歌的名字）。</p>
 <p>以上便是中断的由来。就像神经系统打断大脑的正常运行，带来外界的刺激，一声巨响或者拍一下肩膀。主板上的<a href="http://duartes.org/gustavo/blog/post/motherboard-chipsets-memory-map" target="_blank" rel="external">芯片</a>为了传达外部事件（按下键盘，网络数据包到达，硬盘读取完毕等等）也会中断CPU。硬件外设、中断控制器以及CPU一起完成中断过程。</p>
@@ -23,7 +23,7 @@
 <p><img src="http://img0.ph.126.net/u-7hwJNC-174Sx4O1zkXJw==/1156299204428848479.png" alt=""></p>
 <p>注意中断的到来如何导致内核模式和<a href="http://duartes.org/gustavo/blog/post/cpu-rings-privilege-and-protection" target="_blank" rel="external">Ring 0</a>的切换，但是不会改变活动任务。这就好像Vim变魔术一般调用一个函数直接进入内核。但是Vim依然在这里，它的<a href="http://duartes.org/gustavo/blog/post/anatomy-of-a-program-in-memory" target="_blank" rel="external">地址空间</a>没有变，正在等待函数返回。</p>
 <p>终于要写完了，兴奋的时刻！，哈哈，我知道我还没有回答那个开放问题，并且还引入了新问题。但是当你读到我这句话的时候，如果你仍旧怀疑操作系统到底是什么状态。相信你可以找到答案,因为我们之前已经讲解了了操作系统的动态运行模型。这个浏览器的问题也变得清晰了。如果你还有问题，尤其是这个博文发表之后，我会尽快在博文里面或者评论里面回答你的问题。之后的会在RSS和Twitter上做解答。</p>
-</div></article></div><script src="./js/back2top.js"></script></section><footer><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+</div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
 var d = document, s = d.createElement('script');
 
 s.src = '//dupengchuan.disqus.com/embed.js';

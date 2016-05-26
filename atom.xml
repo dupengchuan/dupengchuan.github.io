@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-24T14:06:24.462Z</updated>
+  <updated>2016-05-26T15:19:40.795Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://dupengchuan.github.io/2016/05/24/when-dos-your-os-run/"/>
     <id>http://dupengchuan.github.io/2016/05/24/when-dos-your-os-run/</id>
     <published>2016-05-24T05:37:08.000Z</published>
-    <updated>2016-05-24T14:06:24.462Z</updated>
+    <updated>2016-05-26T15:19:40.795Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;这篇博文来自于&lt;a href=&quot;http://duartes.org/gustavo/blog/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Gustavo Duarte&lt;/a&gt;的科普博客，本人出于兴趣翻译过来，原文：&lt;a href=&quot;http://duartes.org/gustavo/blog/post/when-does-your-os-run/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;When Does Your OS Run?&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;这里有一个问题，就是在你阅读到我这篇博文中的这句话的时候，你的操作系统是否正在运行？还是只有浏览器在运行？还是它们都处于空闲状态，正在等待你分配任务？&lt;/p&gt;
-&lt;p&gt;这些问题虽然简单但却深入到整个软件运行过程。为了准确地回答这些问题，我们要在大脑中对操作系统行为有一个良好的运行状态模型，即操作系统依次通知进程执行，安全方面以及故障的决策。希望通过这一些列博文，我们能够在脑海里建立起这种模型。本文主要使用Linux作为主要的操作系统，OS X和Windows也会偶尔出现。某些地方我会附上源码链接以方便那些想要深入研究的人。&lt;/p&gt;
+&lt;p&gt;这些问题虽然简单但却深入到整个软件运行过程。为了准确地回答这些问题，我们要在大脑中对操作系统行为有一个良好的运行状态模型，即操作系统依次通知进程执行，安全方面以及故障的决策。希望通过这一些列博文，我们能够在脑海里建立起这种模型。本文主要使用Linux作为主要的操作系统，OS X和Windows也会偶尔出现。某些地方我会附上源码链接以方便那些想要深入研究的人。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;有一个基本公理：即在任何时刻，在CPU上有且仅有一个任务在运行。这个任务通常是一个进程，像浏览器，音乐播放器等等，但是也有可能是操作系统线程，但它也是一个任务。同一时刻CPU上的任务不可能是两个或者多个，也不会是0个。&lt;/p&gt;
 &lt;p&gt;这个听起来很抽象，举个例子，如果你的音乐播放器一直占用着CPU,并且不让其他任务占有，这种情况，你不能打开一个工具（Windows是任务管理器，Linux使用shell命令）去杀死它，此时移动或者点击鼠标都是无效的，因为操作系统不会让它们执行，那么你可能被一直卡在”The fox”（一首歌的名字）。&lt;/p&gt;
 &lt;p&gt;以上便是中断的由来。就像神经系统打断大脑的正常运行，带来外界的刺激，一声巨响或者拍一下肩膀。主板上的&lt;a href=&quot;http://duartes.org/gustavo/blog/post/motherboard-chipsets-memory-map&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;芯片&lt;/a&gt;为了传达外部事件（按下键盘，网络数据包到达，硬盘读取完毕等等）也会中断CPU。硬件外设、中断控制器以及CPU一起完成中断过程。&lt;/p&gt;
@@ -45,7 +45,10 @@
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;这篇博文来自于&lt;a href=&quot;http://duartes.org/gustavo/blog/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Gustavo Duarte&lt;/a&gt;的科普博客，本人出于兴趣翻译过来，原文：&lt;a hr
+&lt;p&gt;这篇博文来自于&lt;a href=&quot;http://duartes.org/gustavo/blog/&quot;&gt;Gustavo Duarte&lt;/a&gt;的科普博客，本人出于兴趣翻译过来，原文：&lt;a href=&quot;http://duartes.org/gustavo/blog/post/when-does-your-os-run/&quot;&gt;When Does Your OS Run?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里有一个问题，就是在你阅读到我这篇博文中的这句话的时候，你的操作系统是否正在运行？还是只有浏览器在运行？还是它们都处于空闲状态，正在等待你分配任务？&lt;/p&gt;
+&lt;p&gt;这些问题虽然简单但却深入到整个软件运行过程。为了准确地回答这些问题，我们要在大脑中对操作系统行为有一个良好的运行状态模型，即操作系统依次通知进程执行，安全方面以及故障的决策。希望通过这一些列博文，我们能够在脑海里建立起这种模型。本文主要使用Linux作为主要的操作系统，OS X和Windows也会偶尔出现。某些地方我会附上源码链接以方便那些想要深入研究的人。&lt;br&gt;
     
     </summary>
     
@@ -59,11 +62,12 @@
     <link href="http://dupengchuan.github.io/2016/05/22/hello-world/"/>
     <id>http://dupengchuan.github.io/2016/05/22/hello-world/</id>
     <published>2016-05-22T05:18:13.523Z</published>
-    <updated>2016-05-23T09:30:36.050Z</updated>
+    <updated>2016-05-26T15:21:23.015Z</updated>
     
     <content type="html">&lt;p&gt;很早就想有一个自己的博客，今天终于初步搭建好了。&lt;/p&gt;
 &lt;p&gt;使用的是github pages托管网页,一个静态博客。&lt;/p&gt;
 &lt;p&gt;Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：&lt;a href=&quot;http://hexo.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hexo.io&lt;/a&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;主题使用的是even，连接：&lt;a href=&quot;https://github.com/ahonn/hexo-theme-even&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/ahonn/hexo-theme-even&lt;/a&gt;，在此谢谢ahonn。&lt;/p&gt;
 &lt;p&gt;争取以后养成写博客的习惯&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://n1.itc.cn/img8/wb/smccloud/recom/2015/09/06/144154649059751427.JPEG&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -73,7 +77,7 @@
     
       &lt;p&gt;很早就想有一个自己的博客，今天终于初步搭建好了。&lt;/p&gt;
 &lt;p&gt;使用的是github pages托管网页,一个静态博客。&lt;/p&gt;
-&lt;p&gt;Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：&lt;a href=&quot;http://hexo.io&quot; target=&quot;_bla
+&lt;p&gt;Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：&lt;a href=&quot;http://hexo.io&quot;&gt;http://hexo.io&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
