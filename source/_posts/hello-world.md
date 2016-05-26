@@ -8,6 +8,8 @@ tags: life
 
 Hexo静态网页生成工具,有关Hexo的使用可以从官网获得帮助：[http://hexo.io](http://hexo.io)
 
+<!--more-->
+
 主题使用的是even，连接：[https://github.com/ahonn/hexo-theme-even](https://github.com/ahonn/hexo-theme-even)，在此谢谢ahonn。
 
 争取以后养成写博客的习惯
