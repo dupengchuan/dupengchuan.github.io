@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-26T15:19:40.795Z</updated>
+  <updated>2016-05-27T12:27:54.922Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -14,6 +14,94 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>FTP服务器安装以及配置</title>
+    <link href="http://dupengchuan.github.io/2016/05/27/vsftpd/"/>
+    <id>http://dupengchuan.github.io/2016/05/27/vsftpd/</id>
+    <published>2016-05-27T10:41:18.000Z</published>
+    <updated>2016-05-27T12:27:54.922Z</updated>
+    
+    <content type="html">&lt;p&gt;今天安装了一下FTP服务器，记录一下安装过程，以及遇到的问题&lt;/p&gt;
+&lt;p&gt;OS： CentOS6.5&lt;/p&gt;
+&lt;p&gt;vsftpd Version： 2.2.2&lt;/p&gt;
+&lt;h1 id=&quot;安装vsftpd&quot;&gt;&lt;a href=&quot;#安装vsftpd&quot; class=&quot;headerlink&quot; title=&quot;安装vsftpd&quot;&gt;&lt;/a&gt;安装vsftpd&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;yum install vsftpd&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h2&gt;&lt;p&gt;vaftpd的配置文件：/etc/vsftpd/vsftpd.conf&lt;/p&gt;
+&lt;p&gt;关掉匿名登录开启本地用户登录&lt;/p&gt;
+&lt;p&gt;anonimous_enable=NO&lt;/p&gt;
+&lt;p&gt;local_enable=YES&lt;/p&gt;
+&lt;h2 id=&quot;设置开机启动&quot;&gt;&lt;a href=&quot;#设置开机启动&quot; class=&quot;headerlink&quot; title=&quot;设置开机启动&quot;&gt;&lt;/a&gt;设置开机启动&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;使用可交互的界面设置（空格选中）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;　　ntsysv&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;命令设置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;　　chkconfig vsftpd on   &lt;/p&gt;
+&lt;h2 id=&quot;启动vsftpd&quot;&gt;&lt;a href=&quot;#启动vsftpd&quot; class=&quot;headerlink&quot; title=&quot;启动vsftpd&quot;&gt;&lt;/a&gt;启动vsftpd&lt;/h2&gt;&lt;p&gt;service vsftpd start&lt;/p&gt;
+&lt;p&gt;发现不能访问，可以ping通，说明不是网络的问题，telnet ip 21。telnet不上,应该是防火墙的原因&lt;/p&gt;
+&lt;h1 id=&quot;配置防火墙&quot;&gt;&lt;a href=&quot;#配置防火墙&quot; class=&quot;headerlink&quot; title=&quot;配置防火墙&quot;&gt;&lt;/a&gt;配置防火墙&lt;/h1&gt;&lt;p&gt;allow all ftp incoming connections&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;iptables -A INPUT -p tcp –dport 21 -m state –state ESTABLISHED -j ACCEPT&lt;br&gt;iptables -A OUTPUT -p tcp –sport 21 -m state –state NEW,ESTABLISHED -j ACCEPT&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Enable active ftp transfers&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;iptables -A INPUT -p tcp –dport 20 -m state –state ESTABLISHED,RELATED -j ACCEPT&lt;br&gt;iptables -A OUTPUT -p tcp –sport 20 -m state –state ESTABLISHED -j ACCEPT&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Enable passive ftp transfers&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;iptables -A INPUT -p tcp –sport 1024:65535 –dport 1024:65535 -m state –state ESTABLISHED -j ACCEPT&lt;br&gt;iptables -A OUTPUT -p tcp –sport 1024:65535 –dport 1024:65535 -m state –state ESTABLISHED,RELATED -j ACCEPT&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;主动模式中，使用端口20发送数据，所以是对20端口配置&lt;/p&gt;
+&lt;p&gt;被动模式的端口号是动态申请的，所以指定的是一个范围&lt;/p&gt;
+&lt;p&gt;防火墙配置好之后记得保存规则&lt;/p&gt;
+&lt;p&gt;service iptables save&lt;/p&gt;
+&lt;p&gt;重启服务，发现还是不能登录，报错如下：&lt;/p&gt;
+&lt;p&gt;500 OOPS: cannot change directory:/home/&lt;strong&gt;&lt;em&gt;*&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;500 OOPS: child died&lt;/p&gt;
+&lt;p&gt;一个权限的问题，google一下，发现是SELinux做了约束，需要修改相应配置&lt;/p&gt;
+&lt;h1 id=&quot;修改SELinux&quot;&gt;&lt;a href=&quot;#修改SELinux&quot; class=&quot;headerlink&quot; title=&quot;修改SELinux&quot;&gt;&lt;/a&gt;修改SELinux&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;关闭SELinux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;　SELinux的启动配置文件是： /etc/selinux/config&lt;/p&gt;
+&lt;p&gt;　SELINUX=disabled&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;开启某些功能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;　网上有的人这么做&lt;/p&gt;
+&lt;p&gt;　setsebool -P ftpd_disable_trans on&lt;/p&gt;
+&lt;p&gt;　但是我这里找不到 ftpd_disable_trans，可能是系统版本的问题，经过尝试，终于用下面命令搞定&lt;/p&gt;
+&lt;p&gt;　setsebool -P ftp_home_dir on&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;一些关于SELinux的命令&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;setsebool xxx on/off　　＃设置状态&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;getsetools -a　　＃结合grep可以看到有关ftp的约束&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sestatus　　＃查看selinux是否开启&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天安装了一下FTP服务器，记录一下安装过程，以及遇到的问题&lt;/p&gt;
+&lt;p&gt;OS： CentOS6.5&lt;/p&gt;
+&lt;p&gt;vsftpd Version： 2.2.2&lt;/p&gt;
+&lt;h1 id=&quot;安装vsftpd&quot;&gt;&lt;a href=&quot;#安装vsftpd&quot; class=&quot;headerlink&quot; title=&quot;安装vsftpd&quot;&gt;&lt;/a&gt;安装vsftpd&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;yum install vsftpd&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://dupengchuan.github.io/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>你的操作系统是如何运行的？</title>
