@@ -36,20 +36,8 @@ python setup.py install
 <pre><code>sudo yum install gcc libffi-devel python-devel openssl-devel
 </code></pre><p>使用rpm命令，检查发现缺少了libffi-devel</p>
 <pre><code>yum install libffi-devel
-</code></pre><p>安装之后顺利安装完成Scrapy</p>
-<pre><code>cat &gt; myspider.py &lt;&lt;EOF
-from scrapy import Spider, Item, Field
-
-class Post(Item):
-  title = Field()
-
-class BlogSpider(Spider):
-  name = &apos;kevin&apos;blog&apos;
-  start_urls = [&apos;dupengchuan.me&apos;]
-  def parse(self, response):
-    return [Post(title=e.extract()) for e in response.css(&quot;h2 a::text&quot;)]
-EOF
-</code></pre><p>运行</p>
+</code></pre><p>安装之后顺利安装完成Scrapy<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; myspider.py &lt;&lt;EOF</span><br><span class="line">  from scrapy import Spider, Item, Field</span><br><span class="line"></span><br><span class="line">  class Post(Item):</span><br><span class="line">    title = Field()</span><br><span class="line"></span><br><span class="line">  class BlogSpider(Spider):</span><br><span class="line">    name = 'kevin'blog'</span><br><span class="line">    start_urls = ['dupengchuan.me']</span><br><span class="line">    def parse(self, response):</span><br><span class="line">      return [Post(title=e.extract()) for e in response.css("h2 a::text")]</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<p>运行</p>
 <pre><code>scrap runspider myspider
 </code></pre><p>运行结果正常这里不再显示</p>
 <hr>

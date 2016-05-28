@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-28T04:07:44.377Z</updated>
+  <updated>2016-05-28T07:44:47.802Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://dupengchuan.github.io/2016/05/27/scrapy-setup/"/>
     <id>http://dupengchuan.github.io/2016/05/27/scrapy-setup/</id>
     <published>2016-05-27T13:45:36.000Z</published>
-    <updated>2016-05-28T04:07:44.377Z</updated>
+    <updated>2016-05-28T07:44:47.802Z</updated>
     
     <content type="html">&lt;h1 id=&quot;安装python环境&quot;&gt;&lt;a href=&quot;#安装python环境&quot; class=&quot;headerlink&quot; title=&quot;安装python环境&quot;&gt;&lt;/a&gt;安装python环境&lt;/h1&gt;&lt;p&gt;下载&lt;a href=&quot;https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python 2.7.11&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;tar -zxvf Python-2.7.11.tgz
@@ -53,20 +53,8 @@ python setup.py install
 &lt;pre&gt;&lt;code&gt;sudo yum install gcc libffi-devel python-devel openssl-devel
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用rpm命令，检查发现缺少了libffi-devel&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;yum install libffi-devel
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装之后顺利安装完成Scrapy&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cat &amp;gt; myspider.py &amp;lt;&amp;lt;EOF
-from scrapy import Spider, Item, Field
-
-class Post(Item):
-  title = Field()
-
-class BlogSpider(Spider):
-  name = &amp;apos;kevin&amp;apos;blog&amp;apos;
-  start_urls = [&amp;apos;dupengchuan.me&amp;apos;]
-  def parse(self, response):
-    return [Post(title=e.extract()) for e in response.css(&amp;quot;h2 a::text&amp;quot;)]
-EOF
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装之后顺利安装完成Scrapy&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cat &amp;gt; myspider.py &amp;lt;&amp;lt;EOF&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  from scrapy import Spider, Item, Field&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  class Post(Item):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    title = Field()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  class BlogSpider(Spider):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    name = &#39;kevin&#39;blog&#39;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    start_urls = [&#39;dupengchuan.me&#39;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    def parse(self, response):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      return [Post(title=e.extract()) for e in response.css(&quot;h2 a::text&quot;)]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;EOF&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;运行&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;scrap runspider myspider
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行结果正常这里不再显示&lt;/p&gt;
 &lt;hr&gt;
