@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-27T12:27:54.922Z</updated>
+  <updated>2016-05-28T04:07:44.377Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -16,85 +16,156 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>安装Scrapy</title>
+    <link href="http://dupengchuan.github.io/2016/05/27/scrapy-setup/"/>
+    <id>http://dupengchuan.github.io/2016/05/27/scrapy-setup/</id>
+    <published>2016-05-27T13:45:36.000Z</published>
+    <updated>2016-05-28T04:07:44.377Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;安装python环境&quot;&gt;&lt;a href=&quot;#安装python环境&quot; class=&quot;headerlink&quot; title=&quot;安装python环境&quot;&gt;&lt;/a&gt;安装python环境&lt;/h1&gt;&lt;p&gt;下载&lt;a href=&quot;https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python 2.7.11&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -zxvf Python-2.7.11.tgz
+
+cd Python-2.7.11
+
+./configure --prefix=/usr/local
+
+make &amp;amp;&amp;amp; make all &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;安装setuptools&quot;&gt;&lt;a href=&quot;#安装setuptools&quot; class=&quot;headerlink&quot; title=&quot;安装setuptools&quot;&gt;&lt;/a&gt;安装setuptools&lt;/h1&gt;&lt;p&gt;使用&lt;a href=&quot;bootstrap.pypa.io&quot;&gt;ez_setup.py&lt;/a&gt;安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget --no-check-certificate https://bootstrap.pypa.io/ez_setup.py
+python ez_setup.py install
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;安装pip&quot;&gt;&lt;a href=&quot;#安装pip&quot; class=&quot;headerlink&quot; title=&quot;安装pip&quot;&gt;&lt;/a&gt;安装pip&lt;/h1&gt;&lt;p&gt;使用&lt;a href=&quot;bootstrap.pypa.io&quot;&gt;get-pip.py&lt;/a&gt;安装：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
+
+python get-pip.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用该方法会自动安装 setuptools 和 wheel&lt;/p&gt;
+&lt;p&gt;使用安装包： &lt;a href=&quot;https://pypi.python.org/pypi/pip/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;pip-8.1.2&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -zxvf pip-8.1.2.tar.gz
+
+cd pip-8.1.2
+
+python setup.py install
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用此方法安装必须先安装好setuptools&lt;/p&gt;
+&lt;h1 id=&quot;安装Scrapy&quot;&gt;&lt;a href=&quot;#安装Scrapy&quot; class=&quot;headerlink&quot; title=&quot;安装Scrapy&quot;&gt;&lt;/a&gt;安装Scrapy&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;pip install Scrapy
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;遇到的问题： Failed building wheel for cryptography&lt;/p&gt;
+&lt;p&gt;cryptography安装不成功，这个包是有关https使用的，系统中要有支持的库，看到了这里&lt;a href=&quot;http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;stackoverflow&lt;/a&gt;,里面通过安装以下包解决了问题&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo yum install gcc libffi-devel python-devel openssl-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用rpm命令，检查发现缺少了libffi-devel&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yum install libffi-devel
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装之后顺利安装完成Scrapy&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat &amp;gt; myspider.py &amp;lt;&amp;lt;EOF
+from scrapy import Spider, Item, Field
+
+class Post(Item):
+  title = Field()
+
+class BlogSpider(Spider):
+  name = &amp;apos;kevin&amp;apos;blog&amp;apos;
+  start_urls = [&amp;apos;dupengchuan.me&amp;apos;]
+  def parse(self, response):
+    return [Post(title=e.extract()) for e in response.css(&amp;quot;h2 a::text&amp;quot;)]
+EOF
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;scrap runspider myspider
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行结果正常这里不再显示&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;OS： CentOS 6.5&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;安装python环境&quot;&gt;&lt;a href=&quot;#安装python环境&quot; class=&quot;headerlink&quot; title=&quot;安装python环境&quot;&gt;&lt;/a&gt;安装python环境&lt;/h1&gt;&lt;p&gt;下载&lt;a href=&quot;https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz&quot;&gt;python 2.7.11&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tar -zxvf Python-2.7.11.tgz
+
+cd Python-2.7.11
+
+./configure --prefix=/usr/local
+
+make &amp;amp;&amp;amp; make all &amp;amp;&amp;amp; make install
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+    
+      <category term="Python" scheme="http://dupengchuan.github.io/tags/Python/"/>
+    
+      <category term="Crawler" scheme="http://dupengchuan.github.io/tags/Crawler/"/>
+    
+  </entry>
+  
+  <entry>
     <title>FTP服务器安装以及配置</title>
     <link href="http://dupengchuan.github.io/2016/05/27/vsftpd/"/>
     <id>http://dupengchuan.github.io/2016/05/27/vsftpd/</id>
     <published>2016-05-27T10:41:18.000Z</published>
-    <updated>2016-05-27T12:27:54.922Z</updated>
+    <updated>2016-05-28T03:47:22.718Z</updated>
     
     <content type="html">&lt;p&gt;今天安装了一下FTP服务器，记录一下安装过程，以及遇到的问题&lt;/p&gt;
 &lt;p&gt;OS： CentOS6.5&lt;/p&gt;
 &lt;p&gt;vsftpd Version： 2.2.2&lt;/p&gt;
-&lt;h1 id=&quot;安装vsftpd&quot;&gt;&lt;a href=&quot;#安装vsftpd&quot; class=&quot;headerlink&quot; title=&quot;安装vsftpd&quot;&gt;&lt;/a&gt;安装vsftpd&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;yum install vsftpd&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;安装vsftpd&quot;&gt;&lt;a href=&quot;#安装vsftpd&quot; class=&quot;headerlink&quot; title=&quot;安装vsftpd&quot;&gt;&lt;/a&gt;安装vsftpd&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;yum install vsftpd
+&lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h2 id=&quot;配置&quot;&gt;&lt;a href=&quot;#配置&quot; class=&quot;headerlink&quot; title=&quot;配置&quot;&gt;&lt;/a&gt;配置&lt;/h2&gt;&lt;p&gt;vaftpd的配置文件：/etc/vsftpd/vsftpd.conf&lt;/p&gt;
 &lt;p&gt;关掉匿名登录开启本地用户登录&lt;/p&gt;
-&lt;p&gt;anonimous_enable=NO&lt;/p&gt;
-&lt;p&gt;local_enable=YES&lt;/p&gt;
-&lt;h2 id=&quot;设置开机启动&quot;&gt;&lt;a href=&quot;#设置开机启动&quot; class=&quot;headerlink&quot; title=&quot;设置开机启动&quot;&gt;&lt;/a&gt;设置开机启动&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;使用可交互的界面设置（空格选中）&lt;/li&gt;
+&lt;pre&gt;&lt;code&gt;anonimous_enable=NO
+
+local_enable=YES
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;设置开机启动&quot;&gt;&lt;a href=&quot;#设置开机启动&quot; class=&quot;headerlink&quot; title=&quot;设置开机启动&quot;&gt;&lt;/a&gt;设置开机启动&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;使用可交互的界面设置（空格选中）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ntsysv
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;命令设置&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chkconfig vsftpd on   
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;　　ntsysv&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;命令设置&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;　　chkconfig vsftpd on   &lt;/p&gt;
-&lt;h2 id=&quot;启动vsftpd&quot;&gt;&lt;a href=&quot;#启动vsftpd&quot; class=&quot;headerlink&quot; title=&quot;启动vsftpd&quot;&gt;&lt;/a&gt;启动vsftpd&lt;/h2&gt;&lt;p&gt;service vsftpd start&lt;/p&gt;
-&lt;p&gt;发现不能访问，可以ping通，说明不是网络的问题，telnet ip 21。telnet不上,应该是防火墙的原因&lt;/p&gt;
+&lt;h2 id=&quot;启动vsftpd&quot;&gt;&lt;a href=&quot;#启动vsftpd&quot; class=&quot;headerlink&quot; title=&quot;启动vsftpd&quot;&gt;&lt;/a&gt;启动vsftpd&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;service vsftpd start
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;发现不能访问，可以ping通，说明不是网络的问题，telnet ip 21。telnet不上,应该是防火墙的原因&lt;/p&gt;
 &lt;h1 id=&quot;配置防火墙&quot;&gt;&lt;a href=&quot;#配置防火墙&quot; class=&quot;headerlink&quot; title=&quot;配置防火墙&quot;&gt;&lt;/a&gt;配置防火墙&lt;/h1&gt;&lt;p&gt;allow all ftp incoming connections&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;iptables -A INPUT -p tcp –dport 21 -m state –state ESTABLISHED -j ACCEPT&lt;br&gt;iptables -A OUTPUT -p tcp –sport 21 -m state –state NEW,ESTABLISHED -j ACCEPT&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Enable active ftp transfers&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;iptables -A INPUT -p tcp –dport 20 -m state –state ESTABLISHED,RELATED -j ACCEPT&lt;br&gt;iptables -A OUTPUT -p tcp –sport 20 -m state –state ESTABLISHED -j ACCEPT&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Enable passive ftp transfers&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;iptables -A INPUT -p tcp –sport 1024:65535 –dport 1024:65535 -m state –state ESTABLISHED -j ACCEPT&lt;br&gt;iptables -A OUTPUT -p tcp –sport 1024:65535 –dport 1024:65535 -m state –state ESTABLISHED,RELATED -j ACCEPT&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;主动模式中，使用端口20发送数据，所以是对20端口配置&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;iptables -A INPUT -p tcp --dport 21 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 21 -m state --state NEW,ESTABLISHED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Enable active ftp transfers&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;iptables -A INPUT -p tcp --dport 20 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 20 -m state --state ESTABLISHED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Enable passive ftp transfers&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;iptables -A INPUT -p tcp --sport 1024:65535 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 1024:65535 --dport 1024:65535 -m state --state ESTABLISHED,RELATED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;主动模式中，使用端口20发送数据，所以是对20端口配置&lt;/p&gt;
 &lt;p&gt;被动模式的端口号是动态申请的，所以指定的是一个范围&lt;/p&gt;
 &lt;p&gt;防火墙配置好之后记得保存规则&lt;/p&gt;
-&lt;p&gt;service iptables save&lt;/p&gt;
-&lt;p&gt;重启服务，发现还是不能登录，报错如下：&lt;/p&gt;
-&lt;p&gt;500 OOPS: cannot change directory:/home/&lt;strong&gt;&lt;em&gt;*&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;500 OOPS: child died&lt;/p&gt;
-&lt;p&gt;一个权限的问题，google一下，发现是SELinux做了约束，需要修改相应配置&lt;/p&gt;
-&lt;h1 id=&quot;修改SELinux&quot;&gt;&lt;a href=&quot;#修改SELinux&quot; class=&quot;headerlink&quot; title=&quot;修改SELinux&quot;&gt;&lt;/a&gt;修改SELinux&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;关闭SELinux&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;　SELinux的启动配置文件是： /etc/selinux/config&lt;/p&gt;
-&lt;p&gt;　SELINUX=disabled&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;开启某些功能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;　网上有的人这么做&lt;/p&gt;
-&lt;p&gt;　setsebool -P ftpd_disable_trans on&lt;/p&gt;
-&lt;p&gt;　但是我这里找不到 ftpd_disable_trans，可能是系统版本的问题，经过尝试，终于用下面命令搞定&lt;/p&gt;
-&lt;p&gt;　setsebool -P ftp_home_dir on&lt;/p&gt;
-&lt;hr&gt;
+&lt;pre&gt;&lt;code&gt;service iptables save
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启服务，发现还是不能登录，报错如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;500 OOPS: cannot change directory:/home/*******
+
+500 OOPS: child died
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一个权限的问题，google一下，发现是SELinux做了约束，需要修改相应配置&lt;/p&gt;
+&lt;h1 id=&quot;修改SELinux&quot;&gt;&lt;a href=&quot;#修改SELinux&quot; class=&quot;headerlink&quot; title=&quot;修改SELinux&quot;&gt;&lt;/a&gt;修改SELinux&lt;/h1&gt;&lt;p&gt;方法一、关闭SELinux&lt;/p&gt;
+&lt;p&gt;SELinux的启动配置文件是： /etc/selinux/config&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;SELINUX=disabled
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;方法二、开启某些功能&lt;/p&gt;
+&lt;p&gt;网上有的人这么做&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;setsebool -P ftpd_disable_trans on
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;但是我这里找不到 ftpd_disable_trans，可能是系统版本的问题，经过尝试，终于用下面命令搞定&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;setsebool -P ftp_home_dir on
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
 &lt;p&gt;一些关于SELinux的命令&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;setsebool xxx on/off　　＃设置状态&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;getsetools -a　　＃结合grep可以看到有关ftp的约束&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;sestatus　　＃查看selinux是否开启&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</content>
+&lt;pre&gt;&lt;code&gt;setsebool xxx on/off　　＃设置状态
+
+getsetools -a　　＃结合grep可以看到有关ftp的约束
+
+sestatus　　＃查看selinux是否开启
+&lt;/code&gt;&lt;/pre&gt;</content>
     
     <summary type="html">
     
       &lt;p&gt;今天安装了一下FTP服务器，记录一下安装过程，以及遇到的问题&lt;/p&gt;
 &lt;p&gt;OS： CentOS6.5&lt;/p&gt;
 &lt;p&gt;vsftpd Version： 2.2.2&lt;/p&gt;
-&lt;h1 id=&quot;安装vsftpd&quot;&gt;&lt;a href=&quot;#安装vsftpd&quot; class=&quot;headerlink&quot; title=&quot;安装vsftpd&quot;&gt;&lt;/a&gt;安装vsftpd&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;yum install vsftpd&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h1 id=&quot;安装vsftpd&quot;&gt;&lt;a href=&quot;#安装vsftpd&quot; class=&quot;headerlink&quot; title=&quot;安装vsftpd&quot;&gt;&lt;/a&gt;安装vsftpd&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;yum install vsftpd
+&lt;/code&gt;&lt;/pre&gt;
     
     </summary>
     

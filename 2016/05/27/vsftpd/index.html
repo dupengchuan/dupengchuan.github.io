@@ -8,67 +8,60 @@
 </script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="post-toc"><span class="toc-title">Directory</span><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装vsftpd"><span class="toc-text">安装vsftpd</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置开机启动"><span class="toc-text">设置开机启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动vsftpd"><span class="toc-text">启动vsftpd</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#配置防火墙"><span class="toc-text">配置防火墙</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改SELinux"><span class="toc-text">修改SELinux</span></a></li></ol></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="https://twitter.com/dupengchuan"><div class="iconfont icon-twitter"> </div>twitter</a></li><li class="link-item"><a href="http://weibo.com/pengchuandu"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archives</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">FTP服务器安装以及配置</h1><div class="post-time">May 27, 2016</div><div class="post-content"><p>今天安装了一下FTP服务器，记录一下安装过程，以及遇到的问题</p>
 <p>OS： CentOS6.5</p>
 <p>vsftpd Version： 2.2.2</p>
-<h1 id="安装vsftpd"><a href="#安装vsftpd" class="headerlink" title="安装vsftpd"></a>安装vsftpd</h1><blockquote>
-<p>yum install vsftpd</p>
-</blockquote>
-<a id="more"></a>
+<h1 id="安装vsftpd"><a href="#安装vsftpd" class="headerlink" title="安装vsftpd"></a>安装vsftpd</h1><pre><code>yum install vsftpd
+</code></pre><a id="more"></a>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>vaftpd的配置文件：/etc/vsftpd/vsftpd.conf</p>
 <p>关掉匿名登录开启本地用户登录</p>
-<p>anonimous_enable=NO</p>
-<p>local_enable=YES</p>
-<h2 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h2><ul>
-<li>使用可交互的界面设置（空格选中）</li>
+<pre><code>anonimous_enable=NO
+
+local_enable=YES
+</code></pre><h2 id="设置开机启动"><a href="#设置开机启动" class="headerlink" title="设置开机启动"></a>设置开机启动</h2><ul>
+<li><p>使用可交互的界面设置（空格选中）</p>
+<pre><code>ntsysv
+</code></pre></li>
+<li><p>命令设置</p>
+<pre><code>chkconfig vsftpd on   
+</code></pre></li>
 </ul>
-<p>　　ntsysv</p>
-<ul>
-<li>命令设置</li>
-</ul>
-<p>　　chkconfig vsftpd on   </p>
-<h2 id="启动vsftpd"><a href="#启动vsftpd" class="headerlink" title="启动vsftpd"></a>启动vsftpd</h2><p>service vsftpd start</p>
-<p>发现不能访问，可以ping通，说明不是网络的问题，telnet ip 21。telnet不上,应该是防火墙的原因</p>
+<h2 id="启动vsftpd"><a href="#启动vsftpd" class="headerlink" title="启动vsftpd"></a>启动vsftpd</h2><pre><code>service vsftpd start
+</code></pre><p>发现不能访问，可以ping通，说明不是网络的问题，telnet ip 21。telnet不上,应该是防火墙的原因</p>
 <h1 id="配置防火墙"><a href="#配置防火墙" class="headerlink" title="配置防火墙"></a>配置防火墙</h1><p>allow all ftp incoming connections</p>
-<blockquote>
-<p>iptables -A INPUT -p tcp –dport 21 -m state –state ESTABLISHED -j ACCEPT<br>iptables -A OUTPUT -p tcp –sport 21 -m state –state NEW,ESTABLISHED -j ACCEPT</p>
-</blockquote>
-<p>Enable active ftp transfers</p>
-<blockquote>
-<p>iptables -A INPUT -p tcp –dport 20 -m state –state ESTABLISHED,RELATED -j ACCEPT<br>iptables -A OUTPUT -p tcp –sport 20 -m state –state ESTABLISHED -j ACCEPT</p>
-</blockquote>
-<p>Enable passive ftp transfers</p>
-<blockquote>
-<p>iptables -A INPUT -p tcp –sport 1024:65535 –dport 1024:65535 -m state –state ESTABLISHED -j ACCEPT<br>iptables -A OUTPUT -p tcp –sport 1024:65535 –dport 1024:65535 -m state –state ESTABLISHED,RELATED -j ACCEPT</p>
-</blockquote>
-<p>主动模式中，使用端口20发送数据，所以是对20端口配置</p>
+<pre><code>iptables -A INPUT -p tcp --dport 21 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 21 -m state --state NEW,ESTABLISHED -j ACCEPT
+</code></pre><p>Enable active ftp transfers</p>
+<pre><code>iptables -A INPUT -p tcp --dport 20 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 20 -m state --state ESTABLISHED -j ACCEPT
+</code></pre><p>Enable passive ftp transfers</p>
+<pre><code>iptables -A INPUT -p tcp --sport 1024:65535 --dport 1024:65535 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 1024:65535 --dport 1024:65535 -m state --state ESTABLISHED,RELATED -j ACCEPT
+</code></pre><p>主动模式中，使用端口20发送数据，所以是对20端口配置</p>
 <p>被动模式的端口号是动态申请的，所以指定的是一个范围</p>
 <p>防火墙配置好之后记得保存规则</p>
-<p>service iptables save</p>
-<p>重启服务，发现还是不能登录，报错如下：</p>
-<p>500 OOPS: cannot change directory:/home/<strong><em>*</em></strong></p>
-<p>500 OOPS: child died</p>
-<p>一个权限的问题，google一下，发现是SELinux做了约束，需要修改相应配置</p>
-<h1 id="修改SELinux"><a href="#修改SELinux" class="headerlink" title="修改SELinux"></a>修改SELinux</h1><ul>
-<li>关闭SELinux</li>
-</ul>
-<p>　SELinux的启动配置文件是： /etc/selinux/config</p>
-<p>　SELINUX=disabled</p>
-<ul>
-<li>开启某些功能</li>
-</ul>
-<p>　网上有的人这么做</p>
-<p>　setsebool -P ftpd_disable_trans on</p>
-<p>　但是我这里找不到 ftpd_disable_trans，可能是系统版本的问题，经过尝试，终于用下面命令搞定</p>
-<p>　setsebool -P ftp_home_dir on</p>
-<hr>
+<pre><code>service iptables save
+</code></pre><p>重启服务，发现还是不能登录，报错如下：</p>
+<pre><code>500 OOPS: cannot change directory:/home/*******
+
+500 OOPS: child died
+</code></pre><p>一个权限的问题，google一下，发现是SELinux做了约束，需要修改相应配置</p>
+<h1 id="修改SELinux"><a href="#修改SELinux" class="headerlink" title="修改SELinux"></a>修改SELinux</h1><p>方法一、关闭SELinux</p>
+<p>SELinux的启动配置文件是： /etc/selinux/config</p>
+<pre><code>SELINUX=disabled
+</code></pre><p>方法二、开启某些功能</p>
+<p>网上有的人这么做</p>
+<pre><code>setsebool -P ftpd_disable_trans on
+</code></pre><p>但是我这里找不到 ftpd_disable_trans，可能是系统版本的问题，经过尝试，终于用下面命令搞定</p>
+<pre><code>setsebool -P ftp_home_dir on
+</code></pre><hr>
 <p>一些关于SELinux的命令</p>
-<ul>
-<li><p>setsebool xxx on/off　　＃设置状态</p>
-</li>
-<li><p>getsetools -a　　＃结合grep可以看到有关ftp的约束</p>
-</li>
-<li><p>sestatus　　＃查看selinux是否开启</p>
-</li>
-</ul>
-</div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+<pre><code>setsebool xxx on/off　　＃设置状态
+
+getsetools -a　　＃结合grep可以看到有关ftp的约束
+
+sestatus　　＃查看selinux是否开启
+</code></pre></div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
 var d = document, s = d.createElement('script');
 
 s.src = '//dupengchuan.disqus.com/embed.js';

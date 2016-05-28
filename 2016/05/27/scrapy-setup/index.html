@@ -1,0 +1,65 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>安装Scrapy · Kevin' blog</title><meta name="description" content="安装Scrapy - Kevin"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/style.css"><!-- fonts--><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="http://fonts.lug.ustc.edu.cn/css?family=Source+Sans+Pro:400,600" type="text/css"><!-- baidu analytics--><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3da6a058b90a794d9abcb126661965af";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="post-toc"><span class="toc-title">Directory</span><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装python环境"><span class="toc-text">安装python环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装setuptools"><span class="toc-text">安装setuptools</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装pip"><span class="toc-text">安装pip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Scrapy"><span class="toc-text">安装Scrapy</span></a></li></ol></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="https://twitter.com/dupengchuan"><div class="iconfont icon-twitter"> </div>twitter</a></li><li class="link-item"><a href="http://weibo.com/pengchuandu"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archives</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">安装Scrapy</h1><div class="post-time">May 27, 2016</div><div class="post-content"><h1 id="安装python环境"><a href="#安装python环境" class="headerlink" title="安装python环境"></a>安装python环境</h1><p>下载<a href="https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz" target="_blank" rel="external">python 2.7.11</a></p>
+<pre><code>tar -zxvf Python-2.7.11.tgz
+
+cd Python-2.7.11
+
+./configure --prefix=/usr/local
+
+make &amp;&amp; make all &amp;&amp; make install
+</code></pre><a id="more"></a>
+<h1 id="安装setuptools"><a href="#安装setuptools" class="headerlink" title="安装setuptools"></a>安装setuptools</h1><p>使用<a href="bootstrap.pypa.io">ez_setup.py</a>安装：</p>
+<pre><code>wget --no-check-certificate https://bootstrap.pypa.io/ez_setup.py
+python ez_setup.py install
+</code></pre><h1 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h1><p>使用<a href="bootstrap.pypa.io">get-pip.py</a>安装：</p>
+<pre><code>wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
+
+python get-pip.py
+</code></pre><p>使用该方法会自动安装 setuptools 和 wheel</p>
+<p>使用安装包： <a href="https://pypi.python.org/pypi/pip/" target="_blank" rel="external">pip-8.1.2</a></p>
+<pre><code>tar -zxvf pip-8.1.2.tar.gz
+
+cd pip-8.1.2
+
+python setup.py install
+</code></pre><p>使用此方法安装必须先安装好setuptools</p>
+<h1 id="安装Scrapy"><a href="#安装Scrapy" class="headerlink" title="安装Scrapy"></a>安装Scrapy</h1><pre><code>pip install Scrapy
+</code></pre><hr>
+<p>遇到的问题： Failed building wheel for cryptography</p>
+<p>cryptography安装不成功，这个包是有关https使用的，系统中要有支持的库，看到了这里<a href="http://stackoverflow.com/questions/22073516/failed-to-install-python-cryptography-package-with-pip-and-setup-py" target="_blank" rel="external">stackoverflow</a>,里面通过安装以下包解决了问题</p>
+<pre><code>sudo yum install gcc libffi-devel python-devel openssl-devel
+</code></pre><p>使用rpm命令，检查发现缺少了libffi-devel</p>
+<pre><code>yum install libffi-devel
+</code></pre><p>安装之后顺利安装完成Scrapy</p>
+<pre><code>cat &gt; myspider.py &lt;&lt;EOF
+from scrapy import Spider, Item, Field
+
+class Post(Item):
+  title = Field()
+
+class BlogSpider(Spider):
+  name = &apos;kevin&apos;blog&apos;
+  start_urls = [&apos;dupengchuan.me&apos;]
+  def parse(self, response):
+    return [Post(title=e.extract()) for e in response.css(&quot;h2 a::text&quot;)]
+EOF
+</code></pre><p>运行</p>
+<pre><code>scrap runspider myspider
+</code></pre><p>运行结果正常这里不再显示</p>
+<hr>
+<p>OS： CentOS 6.5</p>
+</div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//dupengchuan.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script><div class="copyright"><p>© 2016<span class="heart"><i class="icon-next-heart fa fa-heart"></i></span><a href="http://dupengchuan.github.io">Kevin</a></p></div></footer></div><label for="sidebar-toggle" class="sidebar-menu"><i class="fa fa-bars"></i></label><label id="back2top"> <i class="fa fa-chevron-up"></i></label></body></html>
