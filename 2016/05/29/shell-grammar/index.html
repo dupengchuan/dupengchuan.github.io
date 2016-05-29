@@ -1,0 +1,60 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Shell流程控制语句学习 · Kevin' blog</title><meta name="description" content="Shell流程控制语句学习 - Kevin"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/style.css"><!-- fonts--><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="http://fonts.lug.ustc.edu.cn/css?family=Source+Sans+Pro:400,600" type="text/css"><!-- baidu analytics--><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3da6a058b90a794d9abcb126661965af";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="post-toc"><span class="toc-title">Directory</span><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#分支语句"><span class="toc-text">分支语句</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#if-语句"><span class="toc-text">if 语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#case语句"><span class="toc-text">case语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#循环语句"><span class="toc-text">循环语句</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#for语句"><span class="toc-text">for语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#while语句"><span class="toc-text">while语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#until语句"><span class="toc-text">until语句</span></a></li></ol></li></ol></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="https://twitter.com/dupengchuan"><div class="iconfont icon-twitter"> </div>twitter</a></li><li class="link-item"><a href="http://weibo.com/pengchuandu"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archives</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">Shell流程控制语句学习</h1><div class="post-time">May 29, 2016</div><div class="post-content"><p>本博文主要讲述Shell *sh 的流程控制语句,主要有分支语句和循环语句，分支语句包括if、case。循环语句有for、while、until。<br><a id="more"></a></p>
+<h1 id="分支语句"><a href="#分支语句" class="headerlink" title="分支语句"></a>分支语句</h1><h2 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if cond1</span><br><span class="line">  then</span><br><span class="line">  cmd 1</span><br><span class="line">  ...</span><br><span class="line">  cmd n</span><br><span class="line">elif cond2</span><br><span class="line">  then</span><br><span class="line">  cmd 1</span><br><span class="line">  ...</span><br><span class="line">  cmd n</span><br><span class="line">else</span><br><span class="line">  cmd 1</span><br><span class="line">  ...</span><br><span class="line">  cmd n</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></p>
+<p>tips:</p>
+<ul>
+<li>else 之后没有 then 命令</li>
+<li>最后一定要用 fi 结束</li>
+</ul>
+<p>这些是语法上的强制要求，违反就会运行报错</p>
+<h2 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">case $value in</span><br><span class="line">regex1)</span><br><span class="line">  cmd 1</span><br><span class="line">  ...</span><br><span class="line">  cmd n</span><br><span class="line">  ;;</span><br><span class="line">... #多个case</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></p>
+<p>tip:</p>
+<ul>
+<li>最后一个case可加可不加;;,其他case最后必须有;;命令</li>
+<li>最后必须要有 esac 结束命令</li>
+<li>匹配条件可以有多个，用 | 并列</li>
+</ul>
+<p>匹配规则</p>
+<ul>
+<li><ul>
+<li>任意多个字符</li>
+</ul>
+</li>
+<li>? 单个字符</li>
+<li>[] 在[]里面的任意单个字符</li>
+</ul>
+<p>Demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">case $1 in</span><br><span class="line">1|2|3)</span><br><span class="line">  echo &quot;input: &quot; $1</span><br><span class="line">  ;;</span><br><span class="line">4?)</span><br><span class="line">  echo &quot;input: &quot; 40~49</span><br><span class="line">  ;;</span><br><span class="line">[a-z]|[A-Z]j)</span><br><span class="line">  echo &quot;input: letter&quot;</span><br><span class="line">  ;;</span><br><span class="line">*)</span><br><span class="line">  echo &quot;any&quot;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h1><h2 id="for语句"><a href="#for语句" class="headerlink" title="for语句"></a>for语句</h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for i in $(seq start end)</span><br><span class="line">do</span><br><span class="line">  cmd 1</span><br><span class="line">  ...</span><br><span class="line">  cmd n</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<p>notes:</p>
+<ul>
+<li>循环变量和起始和结束变量都没有带 $ 符号</li>
+</ul>
+<p>Demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for i in $(seq 0 10)</span><br><span class="line">do</span><br><span class="line">  echo hello world!</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<h2 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a>while语句</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">while condition</span><br><span class="line">do</span><br><span class="line">  cmd1</span><br><span class="line">  ...</span><br><span class="line">  cmd2</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>Demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">read i</span><br><span class="line">declare -i target=10</span><br><span class="line">while ((i&lt;target))</span><br><span class="line">  do</span><br><span class="line">    echo $i</span><br><span class="line">    let i++</span><br><span class="line">  done</span><br></pre></td></tr></table></figure></p>
+<h2 id="until语句"><a href="#until语句" class="headerlink" title="until语句"></a>until语句</h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">until condition</span><br><span class="line">do</span><br><span class="line">  cmd 1</span><br><span class="line">  ...</span><br><span class="line">  cmd n</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<p>tips:</p>
+<ul>
+<li>条件为假的时候执行循环</li>
+</ul>
+<p>Demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">read i</span><br><span class="line">declare -i target=10</span><br><span class="line">until ((i &gt; target))</span><br><span class="line">do</span><br><span class="line">  echo $1</span><br><span class="line">  ((i++))</span><br><span class="line">done</span><br></pre></td></tr></table></figure></p>
+<hr>
+<ul>
+<li>和c语言比较,关键字条件之间必须有空格</li>
+</ul>
+</div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//dupengchuan.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script><div class="copyright"><p>© 2016<span class="heart"><i class="icon-next-heart fa fa-heart"></i></span><a href="http://dupengchuan.github.io">Kevin</a></p></div></footer></div><label for="sidebar-toggle" class="sidebar-menu"><i class="fa fa-bars"></i></label><label id="back2top"> <i class="fa fa-chevron-up"></i></label></body></html>

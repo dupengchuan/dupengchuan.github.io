@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-28T07:44:47.802Z</updated>
+  <updated>2016-05-29T04:47:35.172Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -16,11 +16,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Shell流程控制语句学习</title>
+    <link href="http://dupengchuan.github.io/2016/05/29/shell-grammar/"/>
+    <id>http://dupengchuan.github.io/2016/05/29/shell-grammar/</id>
+    <published>2016-05-29T01:44:21.000Z</published>
+    <updated>2016-05-29T04:47:35.172Z</updated>
+    
+    <content type="html">&lt;p&gt;本博文主要讲述Shell *sh 的流程控制语句,主要有分支语句和循环语句，分支语句包括if、case。循环语句有for、while、until。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;分支语句&quot;&gt;&lt;a href=&quot;#分支语句&quot; class=&quot;headerlink&quot; title=&quot;分支语句&quot;&gt;&lt;/a&gt;分支语句&lt;/h1&gt;&lt;h2 id=&quot;if-语句&quot;&gt;&lt;a href=&quot;#if-语句&quot; class=&quot;headerlink&quot; title=&quot;if 语句&quot;&gt;&lt;/a&gt;if 语句&lt;/h2&gt;&lt;p&gt;语法：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;if cond1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  then&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd n&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;elif cond2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  then&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd n&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;else&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd n&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fi&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;tips:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;else 之后没有 then 命令&lt;/li&gt;
+&lt;li&gt;最后一定要用 fi 结束&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这些是语法上的强制要求，违反就会运行报错&lt;/p&gt;
+&lt;h2 id=&quot;case语句&quot;&gt;&lt;a href=&quot;#case语句&quot; class=&quot;headerlink&quot; title=&quot;case语句&quot;&gt;&lt;/a&gt;case语句&lt;/h2&gt;&lt;p&gt;语法：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;case $value in&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;regex1)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd n&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;... #多个case&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;esac&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;tip:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最后一个case可加可不加;;,其他case最后必须有;;命令&lt;/li&gt;
+&lt;li&gt;最后必须要有 esac 结束命令&lt;/li&gt;
+&lt;li&gt;匹配条件可以有多个，用 | 并列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;匹配规则&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;ul&gt;
+&lt;li&gt;任意多个字符&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;? 单个字符&lt;/li&gt;
+&lt;li&gt;[] 在[]里面的任意单个字符&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Demo&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;case $1 in&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1|2|3)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo &amp;quot;input: &amp;quot; $1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4?)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo &amp;quot;input: &amp;quot; 40~49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[a-z]|[A-Z]j)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo &amp;quot;input: letter&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo &amp;quot;any&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;esac&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id=&quot;循环语句&quot;&gt;&lt;a href=&quot;#循环语句&quot; class=&quot;headerlink&quot; title=&quot;循环语句&quot;&gt;&lt;/a&gt;循环语句&lt;/h1&gt;&lt;h2 id=&quot;for语句&quot;&gt;&lt;a href=&quot;#for语句&quot; class=&quot;headerlink&quot; title=&quot;for语句&quot;&gt;&lt;/a&gt;for语句&lt;/h2&gt;&lt;p&gt;语法：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for i in $(seq start end)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd n&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;done&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;循环变量和起始和结束变量都没有带 $ 符号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Demo&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for i in $(seq 0 10)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo hello world!&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;done&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;while语句&quot;&gt;&lt;a href=&quot;#while语句&quot; class=&quot;headerlink&quot; title=&quot;while语句&quot;&gt;&lt;/a&gt;while语句&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;while condition&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;done&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;Demo&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;read i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;declare -i target=10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;while ((i&amp;lt;target))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    echo $i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    let i++&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  done&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h2 id=&quot;until语句&quot;&gt;&lt;a href=&quot;#until语句&quot; class=&quot;headerlink&quot; title=&quot;until语句&quot;&gt;&lt;/a&gt;until语句&lt;/h2&gt;&lt;p&gt;语法：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;until condition&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  cmd n&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;done&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;tips:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;条件为假的时候执行循环&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Demo&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;read i&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;declare -i target=10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;until ((i &amp;gt; target))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;do&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo $1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  ((i++))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;done&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;和c语言比较,关键字条件之间必须有空格&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本博文主要讲述Shell *sh 的流程控制语句,主要有分支语句和循环语句，分支语句包括if、case。循环语句有for、while、until。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="Shell" scheme="http://dupengchuan.github.io/tags/Shell/"/>
+    
+  </entry>
+  
+  <entry>
     <title>安装Scrapy</title>
     <link href="http://dupengchuan.github.io/2016/05/27/scrapy-setup/"/>
     <id>http://dupengchuan.github.io/2016/05/27/scrapy-setup/</id>
     <published>2016-05-27T13:45:36.000Z</published>
-    <updated>2016-05-28T07:44:47.802Z</updated>
+    <updated>2016-05-28T07:54:38.975Z</updated>
     
     <content type="html">&lt;h1 id=&quot;安装python环境&quot;&gt;&lt;a href=&quot;#安装python环境&quot; class=&quot;headerlink&quot; title=&quot;安装python环境&quot;&gt;&lt;/a&gt;安装python环境&lt;/h1&gt;&lt;p&gt;下载&lt;a href=&quot;https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;python 2.7.11&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;tar -zxvf Python-2.7.11.tgz
@@ -33,6 +97,7 @@ make &amp;amp;&amp;amp; make all &amp;amp;&amp;amp; make install
 &lt;/code&gt;&lt;/pre&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;安装setuptools&quot;&gt;&lt;a href=&quot;#安装setuptools&quot; class=&quot;headerlink&quot; title=&quot;安装setuptools&quot;&gt;&lt;/a&gt;安装setuptools&lt;/h1&gt;&lt;p&gt;使用&lt;a href=&quot;bootstrap.pypa.io&quot;&gt;ez_setup.py&lt;/a&gt;安装：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget --no-check-certificate https://bootstrap.pypa.io/ez_setup.py
+
 python ez_setup.py install
 &lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;安装pip&quot;&gt;&lt;a href=&quot;#安装pip&quot; class=&quot;headerlink&quot; title=&quot;安装pip&quot;&gt;&lt;/a&gt;安装pip&lt;/h1&gt;&lt;p&gt;使用&lt;a href=&quot;bootstrap.pypa.io&quot;&gt;get-pip.py&lt;/a&gt;安装：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
