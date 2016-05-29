@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-29T04:47:35.172Z</updated>
+  <updated>2016-05-29T12:36:21.014Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -14,6 +14,132 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Bash中的快捷键</title>
+    <link href="http://dupengchuan.github.io/2016/05/29/bash-shortcuts/"/>
+    <id>http://dupengchuan.github.io/2016/05/29/bash-shortcuts/</id>
+    <published>2016-05-29T11:43:28.000Z</published>
+    <updated>2016-05-29T12:36:21.014Z</updated>
+    
+    <content type="html">&lt;p&gt;生活在shell bash上的人熟记Bash中快捷键可以大大提高敲命令和查看的速度，提高工作的效率，一&lt;/p&gt;
+&lt;p&gt;下是作者常用的快捷键。记一下笔者常用的一些快捷键。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;光标移动&quot;&gt;&lt;a href=&quot;#光标移动&quot; class=&quot;headerlink&quot; title=&quot;光标移动&quot;&gt;&lt;/a&gt;光标移动&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;快捷键&lt;/th&gt;
+&lt;th&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + 左箭头&lt;/td&gt;
+&lt;td&gt;向左移动一个单词&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + 右箭头&lt;/td&gt;
+&lt;td&gt;向右移动一个单词&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + a&lt;/td&gt;
+&lt;td&gt;移动到行首&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + e&lt;/td&gt;
+&lt;td&gt;移动到行尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&quot;编辑操作&quot;&gt;&lt;a href=&quot;#编辑操作&quot; class=&quot;headerlink&quot; title=&quot;编辑操作&quot;&gt;&lt;/a&gt;编辑操作&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;操作键&lt;/th&gt;
+&lt;th&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + u&lt;/td&gt;
+&lt;td&gt;清除光标左边所有&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + k&lt;/td&gt;
+&lt;td&gt;清除光标右边所有&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Alt + d&lt;/td&gt;
+&lt;td&gt;从光标位置开始删除到单词尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + w&lt;/td&gt;
+&lt;td&gt;从光标位置开始删除到单词首&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + r&lt;/td&gt;
+&lt;td&gt;搜索历史命令&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + .&lt;/td&gt;
+&lt;td&gt;使用上一次命令最后一个参数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + Shift + c&lt;/td&gt;
+&lt;td&gt;拷贝&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + Shift + v&lt;/td&gt;
+&lt;td&gt;粘贴&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&quot;控制操作&quot;&gt;&lt;a href=&quot;#控制操作&quot; class=&quot;headerlink&quot; title=&quot;控制操作&quot;&gt;&lt;/a&gt;控制操作&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;快捷键&lt;/th&gt;
+&lt;th&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + l&lt;/td&gt;
+&lt;td&gt;清屏&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Shift + PgUP&lt;/td&gt;
+&lt;td&gt;向上翻页&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Shift + PgDn&lt;/td&gt;
+&lt;td&gt;向下翻页&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + s&lt;/td&gt;
+&lt;td&gt;阻止屏幕输出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + q&lt;/td&gt;
+&lt;td&gt;允许屏幕输出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Ctrl + z&lt;/td&gt;
+&lt;td&gt;挂起进程(之后进程处于T状态)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;生活在shell bash上的人熟记Bash中快捷键可以大大提高敲命令和查看的速度，提高工作的效率，一&lt;/p&gt;
+&lt;p&gt;下是作者常用的快捷键。记一下笔者常用的一些快捷键。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Shell" scheme="http://dupengchuan.github.io/tags/Shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Shell流程控制语句学习</title>
