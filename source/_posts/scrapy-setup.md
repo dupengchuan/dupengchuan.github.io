@@ -24,6 +24,7 @@ tags:
 使用[ez_setup.py](bootstrap.pypa.io)安装：
 
     wget --no-check-certificate https://bootstrap.pypa.io/ez_setup.py
+
     python ez_setup.py install
 
 # 安装pip #
@@ -63,20 +64,20 @@ cryptography安装不成功，这个包是有关https使用的，系统中要有
     yum install libffi-devel
 
 安装之后顺利安装完成Scrapy
+```Python
+cat > myspider.py <<EOF
+  from scrapy import Spider, Item, Field
 
-    cat > myspider.py <<EOF
-    from scrapy import Spider, Item, Field
+  class Post(Item):
+    title = Field()
 
-    class Post(Item):
-      title = Field()
-
-    class BlogSpider(Spider):
-      name = 'kevin'blog'
-      start_urls = ['dupengchuan.me']
-      def parse(self, response):
-        return [Post(title=e.extract()) for e in response.css("h2 a::text")]
-    EOF
-
+  class BlogSpider(Spider):
+    name = 'kevin'blog'
+    start_urls = ['dupengchuan.me']
+    def parse(self, response):
+      return [Post(title=e.extract()) for e in response.css("h2 a::text")]
+EOF
+```
 运行
 
     scrap runspider myspider
