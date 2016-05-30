@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-30T10:06:56.875Z</updated>
+  <updated>2016-05-30T10:12:40.690Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://dupengchuan.github.io/2016/05/30/ssh-login/"/>
     <id>http://dupengchuan.github.io/2016/05/30/ssh-login/</id>
     <published>2016-05-30T04:22:52.000Z</published>
-    <updated>2016-05-30T10:06:56.875Z</updated>
+    <updated>2016-05-30T10:12:40.690Z</updated>
     
     <content type="html">&lt;p&gt;SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。&lt;/p&gt;
 &lt;p&gt;SSH提供了两种验证方式。&lt;/p&gt;
@@ -38,7 +38,7 @@
 &lt;li&gt;如果yes，则执行步骤2，并将远程主机公钥存入$HOME/.ssh/known_host文件中，供下次使用。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;流程图如下:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://img2.ph.126.net/uWUDtGxI3xhg_EE_W3cpVg==/6631698885372855341.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img2.ph.126.net/uWUDtGxI3xhg_EE_W3cpVg==/6631698885372855341.png&quot; alt=&quot;sorry&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;基于密钥的安全验证&quot;&gt;&lt;a href=&quot;#基于密钥的安全验证&quot; class=&quot;headerlink&quot; title=&quot;基于密钥的安全验证&quot;&gt;&lt;/a&gt;基于密钥的安全验证&lt;/h1&gt;&lt;p&gt;验证过程如下：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;local host将自己的公钥发送给remote host。&lt;/li&gt;
@@ -47,7 +47,7 @@
 &lt;li&gt;remote检查随机数，确定验证公钥的合法性，给local host反馈结果。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;流程图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://img0.ph.126.net/nfQy6oBEaoTDnhcFBO8qZQ==/1993687260144251892.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img0.ph.126.net/nfQy6oBEaoTDnhcFBO8qZQ==/1993687260144251892.png&quot; alt=&quot;sorry&quot;&gt;&lt;/p&gt;
 &lt;h1 id=&quot;基于密钥验证登录实践&quot;&gt;&lt;a href=&quot;#基于密钥验证登录实践&quot; class=&quot;headerlink&quot; title=&quot;基于密钥验证登录实践&quot;&gt;&lt;/a&gt;基于密钥验证登录实践&lt;/h1&gt;&lt;p&gt;步骤很简单&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;生成本地公私钥对&lt;/li&gt;
@@ -83,7 +83,7 @@
 &lt;pre&gt;&lt;code&gt;chmod 700 .ssh
 chmod 600 .ssh/id_rsa
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;SSH总的流程如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://img1.ph.126.net/2wPg2IDX5YSLWin_EGsRJw==/6631745064861226711.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img1.ph.126.net/2wPg2IDX5YSLWin_EGsRJw==/6631745064861226711.jpg&quot; alt=&quot;sorry&quot;&gt;&lt;/p&gt;
 &lt;p&gt;参考文章：&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SSH原理与运用（一）：远程登录&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://7056824.blog.51cto.com/69854/403669/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;使用ssh公钥密钥自动登陆linux服务器&lt;/a&gt;&lt;/p&gt;
