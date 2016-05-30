@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-30T07:38:38.841Z</updated>
+  <updated>2016-05-30T10:06:56.875Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://dupengchuan.github.io/2016/05/30/ssh-login/"/>
     <id>http://dupengchuan.github.io/2016/05/30/ssh-login/</id>
     <published>2016-05-30T04:22:52.000Z</published>
-    <updated>2016-05-30T07:38:38.841Z</updated>
+    <updated>2016-05-30T10:06:56.875Z</updated>
     
     <content type="html">&lt;p&gt;SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。&lt;/p&gt;
 &lt;p&gt;SSH提供了两种验证方式。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;基于口令的安全验证，知道账号和口令，输入口令可以登录到远程主机，但是每次登陆都需要输入口令，无法避免“中间人”攻击。&lt;/li&gt;
-&lt;li&gt;基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。初次登陆需要输入口令，之后登陆不需要口令。&lt;/li&gt;
+&lt;li&gt;基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。通过使用ssh-agent和ssh-add可以做到免口令登陆。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;基于口令的安全验证&quot;&gt;&lt;a href=&quot;#基于口令的安全验证&quot; class=&quot;headerlink&quot; title=&quot;基于口令的安全验证&quot;&gt;&lt;/a&gt;基于口令的安全验证&lt;/h1&gt;&lt;p&gt;当发送一个登陆命令时&lt;/p&gt;
@@ -54,9 +54,10 @@
 &lt;li&gt;本地公钥添加到remot的$HOME/.ssh/authorized_keys文件中&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;本地生成密钥对&quot;&gt;&lt;a href=&quot;#本地生成密钥对&quot; class=&quot;headerlink&quot; title=&quot;本地生成密钥对&quot;&gt;&lt;/a&gt;本地生成密钥对&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也可以为自己的私钥设置密钥&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -P &amp;quot;xxxxxx&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;添加公钥到remote&quot;&gt;&lt;a href=&quot;#添加公钥到remote&quot; class=&quot;headerlink&quot; title=&quot;添加公钥到remote&quot;&gt;&lt;/a&gt;添加公钥到remote&lt;/h2&gt;&lt;p&gt;方法1&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也可以为自己的私钥设置口令&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -P &amp;quot;xxxx&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;自己的私钥设置口令之后每次登陆都需要输入自己的口令，使用ssh-agent和ssh-add可以做到把口令的放入代理不用自己每次输入。&lt;/p&gt;
+&lt;h2 id=&quot;添加公钥到remote&quot;&gt;&lt;a href=&quot;#添加公钥到remote&quot; class=&quot;headerlink&quot; title=&quot;添加公钥到remote&quot;&gt;&lt;/a&gt;添加公钥到remote&lt;/h2&gt;&lt;p&gt;方法1&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ssh-copy-id user@host
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;tips:&lt;/p&gt;
 &lt;p&gt;远程配置文件/etc/ssd/sshd_config去掉以下注释，然后重启ssh服务&lt;/p&gt;
@@ -67,12 +68,25 @@
 &lt;pre&gt;&lt;code&gt;ssh user@host &amp;apos;mkdir -p .ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; .ssh/authorized_keys&amp;apos; &amp;lt; ~/.ssh/id_rsa.pub
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;方法3&lt;/p&gt;
 &lt;p&gt;  scp id_rsa.pub user@host:.ssh/&lt;br&gt;  cat id_rsa.pub &amp;gt;&amp;gt; authorized_keys&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;权限问题可能会造成不是自己想要的结果，比如id_rsa文件group和other如果有了写权限，基于密钥的验证就会降级为基于口令&lt;/p&gt;
+&lt;h2 id=&quot;设置免口令登陆&quot;&gt;&lt;a href=&quot;#设置免口令登陆&quot; class=&quot;headerlink&quot; title=&quot;设置免口令登陆&quot;&gt;&lt;/a&gt;设置免口令登陆&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;ssh-add $HOME/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; 输入自己的口令，之后登陆就交给代理处理，不需要输入口令&lt;/p&gt;
+&lt;p&gt;遇到的问题：&lt;/p&gt;
+&lt;p&gt;Could not open a connection to your authentication agent&lt;/p&gt;
+&lt;p&gt;通过下面命令解决了&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-agent bash
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;不用之后一定要清除，否则别人用你的电脑一样可以免口令登陆&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-agent -k
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;查看私钥指纹&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-add -l
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;权限问题可能会造成不是自己想要的结果，比如id_rsa文件group和other如果有了写权限，基于密钥的验证就会降级为基于口令,设置.ssh目录的最小权限&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chmod 700 .ssh
 chmod 600 .ssh/id_rsa
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参考文章：&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;SSH总的流程如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img1.ph.126.net/2wPg2IDX5YSLWin_EGsRJw==/6631745064861226711.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;参考文章：&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SSH原理与运用（一）：远程登录&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://7056824.blog.51cto.com/69854/403669/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;使用ssh公钥密钥自动登陆linux服务器&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
@@ -81,7 +95,7 @@ chmod 600 .ssh/id_rsa
 &lt;p&gt;SSH提供了两种验证方式。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;基于口令的安全验证，知道账号和口令，输入口令可以登录到远程主机，但是每次登陆都需要输入口令，无法避免“中间人”攻击。&lt;/li&gt;
-&lt;li&gt;基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。初次登陆需要输入口令，之后登陆不需要口令。&lt;/li&gt;
+&lt;li&gt;基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。通过使用ssh-agent和ssh-add可以做到免口令登陆。&lt;/li&gt;
 &lt;/ol&gt;
     
     </summary>

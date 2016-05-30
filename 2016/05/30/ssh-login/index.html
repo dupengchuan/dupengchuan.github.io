@@ -5,11 +5,11 @@
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="post-toc"><span class="toc-title">Directory</span><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于口令的安全验证"><span class="toc-text">基于口令的安全验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于密钥的安全验证"><span class="toc-text">基于密钥的安全验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于密钥验证登录实践"><span class="toc-text">基于密钥验证登录实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#本地生成密钥对"><span class="toc-text">本地生成密钥对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加公钥到remote"><span class="toc-text">添加公钥到remote</span></a></li></ol></li></ol></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="https://twitter.com/dupengchuan"><div class="iconfont icon-twitter"> </div>twitter</a></li><li class="link-item"><a href="http://weibo.com/pengchuandu"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archives</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">SSH远程登录</h1><div class="post-time">May 30, 2016</div><div class="post-content"><p>SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。</p>
+</script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="post-toc"><span class="toc-title">Directory</span><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于口令的安全验证"><span class="toc-text">基于口令的安全验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于密钥的安全验证"><span class="toc-text">基于密钥的安全验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于密钥验证登录实践"><span class="toc-text">基于密钥验证登录实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#本地生成密钥对"><span class="toc-text">本地生成密钥对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加公钥到remote"><span class="toc-text">添加公钥到remote</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置免口令登陆"><span class="toc-text">设置免口令登陆</span></a></li></ol></li></ol></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="https://twitter.com/dupengchuan"><div class="iconfont icon-twitter"> </div>twitter</a></li><li class="link-item"><a href="http://weibo.com/pengchuandu"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archives</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">SSH远程登录</h1><div class="post-time">May 30, 2016</div><div class="post-content"><p>SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。</p>
 <p>SSH提供了两种验证方式。</p>
 <ol>
 <li>基于口令的安全验证，知道账号和口令，输入口令可以登录到远程主机，但是每次登陆都需要输入口令，无法避免“中间人”攻击。</li>
-<li>基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。初次登陆需要输入口令，之后登陆不需要口令。</li>
+<li>基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。通过使用ssh-agent和ssh-add可以做到免口令登陆。</li>
 </ol>
 <a id="more"></a>
 <h1 id="基于口令的安全验证"><a href="#基于口令的安全验证" class="headerlink" title="基于口令的安全验证"></a>基于口令的安全验证</h1><p>当发送一个登陆命令时</p>
@@ -37,9 +37,10 @@
 <li>本地公钥添加到remot的$HOME/.ssh/authorized_keys文件中</li>
 </ol>
 <h2 id="本地生成密钥对"><a href="#本地生成密钥对" class="headerlink" title="本地生成密钥对"></a>本地生成密钥对</h2><pre><code>ssh-keygen -t rsa
-</code></pre><p>也可以为自己的私钥设置密钥</p>
-<pre><code>ssh-keygen -t rsa -P &quot;xxxxxx&quot;
-</code></pre><h2 id="添加公钥到remote"><a href="#添加公钥到remote" class="headerlink" title="添加公钥到remote"></a>添加公钥到remote</h2><p>方法1</p>
+</code></pre><p>也可以为自己的私钥设置口令</p>
+<pre><code>ssh-keygen -t rsa -P &quot;xxxx&quot;
+</code></pre><p>自己的私钥设置口令之后每次登陆都需要输入自己的口令，使用ssh-agent和ssh-add可以做到把口令的放入代理不用自己每次输入。</p>
+<h2 id="添加公钥到remote"><a href="#添加公钥到remote" class="headerlink" title="添加公钥到remote"></a>添加公钥到remote</h2><p>方法1</p>
 <pre><code>$ssh-copy-id user@host
 </code></pre><p>tips:</p>
 <p>远程配置文件/etc/ssd/sshd_config去掉以下注释，然后重启ssh服务</p>
@@ -50,12 +51,25 @@
 <pre><code>ssh user@host &apos;mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys&apos; &lt; ~/.ssh/id_rsa.pub
 </code></pre><p>方法3</p>
 <p>  scp id_rsa.pub user@host:.ssh/<br>  cat id_rsa.pub &gt;&gt; authorized_keys</p>
-<hr>
-<p>权限问题可能会造成不是自己想要的结果，比如id_rsa文件group和other如果有了写权限，基于密钥的验证就会降级为基于口令</p>
+<h2 id="设置免口令登陆"><a href="#设置免口令登陆" class="headerlink" title="设置免口令登陆"></a>设置免口令登陆</h2><pre><code>ssh-add $HOME/.ssh/id_rsa
+</code></pre><p> 输入自己的口令，之后登陆就交给代理处理，不需要输入口令</p>
+<p>遇到的问题：</p>
+<p>Could not open a connection to your authentication agent</p>
+<p>通过下面命令解决了</p>
+<pre><code>ssh-agent bash
+</code></pre><p>不用之后一定要清除，否则别人用你的电脑一样可以免口令登陆</p>
+<pre><code>ssh-agent -k
+</code></pre><p>查看私钥指纹</p>
+<pre><code>ssh-add -l
+</code></pre><hr>
+<p>权限问题可能会造成不是自己想要的结果，比如id_rsa文件group和other如果有了写权限，基于密钥的验证就会降级为基于口令,设置.ssh目录的最小权限</p>
 <pre><code>chmod 700 .ssh
 chmod 600 .ssh/id_rsa
-</code></pre><p>参考文章：</p>
+</code></pre><p>SSH总的流程如下：</p>
+<p><img src="http://img1.ph.126.net/2wPg2IDX5YSLWin_EGsRJw==/6631745064861226711.jpg" alt=""></p>
+<p>参考文章：</p>
 <p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="external">SSH原理与运用（一）：远程登录</a></p>
+<p><a href="http://7056824.blog.51cto.com/69854/403669/" target="_blank" rel="external">使用ssh公钥密钥自动登陆linux服务器</a></p>
 </div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
 var d = document, s = d.createElement('script');
 
