@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-05-29T12:36:21.014Z</updated>
+  <updated>2016-05-30T07:35:02.431Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -16,14 +16,87 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>SSH远程登录</title>
+    <link href="http://dupengchuan.github.io/2016/05/30/ssh-login/"/>
+    <id>http://dupengchuan.github.io/2016/05/30/ssh-login/</id>
+    <published>2016-05-30T04:22:52.000Z</published>
+    <updated>2016-05-30T07:35:02.431Z</updated>
+    
+    <content type="html">&lt;p&gt;SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。&lt;/p&gt;
+&lt;p&gt;SSH提供了两种验证方式。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;基于口令的安全验证，知道账号和口令，输入口令可以登录到远程主机，但是每次登陆都需要输入口令，无法避免“中间人”攻击。&lt;/li&gt;
+&lt;li&gt;基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。初次登陆需要输入口令，之后登陆不需要口令。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h1 id=&quot;基于口令的安全验证&quot;&gt;&lt;a href=&quot;#基于口令的安全验证&quot; class=&quot;headerlink&quot; title=&quot;基于口令的安全验证&quot;&gt;&lt;/a&gt;基于口令的安全验证&lt;/h1&gt;&lt;p&gt;当发送一个登陆命令时&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh user@host
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;查询$HOME/.ssh/known_host里面是否有host对应的公钥&lt;/li&gt;
+&lt;li&gt;如果找到host对应的公钥，不会有是否连接远程主机的提示，客户端用公钥加密口令发功给远程主机，远程主机解密，如果口令正确则登陆成功&lt;/li&gt;
+&lt;li&gt;如果没有找到host对应的公钥，则向host请求公钥，之后登陆界面会显示远程主机的指纹，是否连接&lt;/li&gt;
+&lt;li&gt;如果yes，则执行步骤2，并将远程主机公钥存入$HOME/.ssh/known_host文件中，供下次使用。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;流程图如下:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img2.ph.126.net/uWUDtGxI3xhg_EE_W3cpVg==/6631698885372855341.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;基于密钥的安全验证&quot;&gt;&lt;a href=&quot;#基于密钥的安全验证&quot; class=&quot;headerlink&quot; title=&quot;基于密钥的安全验证&quot;&gt;&lt;/a&gt;基于密钥的安全验证&lt;/h1&gt;&lt;p&gt;验证过程如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;local host将自己的公钥发送给remote host。&lt;/li&gt;
+&lt;li&gt;remote host查询自己的authorized_keys文件，如果存在该公钥则给local host 发送一个chanllenge(用local host的公钥加密一个随机数)。&lt;/li&gt;
+&lt;li&gt;local host使用自己的私钥加密这个随机数发送给remote&lt;/li&gt;
+&lt;li&gt;remote检查随机数，确定验证公钥的合法性，给local host反馈结果。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;流程图如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://img0.ph.126.net/nfQy6oBEaoTDnhcFBO8qZQ==/1993687260144251892.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;基于密钥验证登录实践&quot;&gt;&lt;a href=&quot;#基于密钥验证登录实践&quot; class=&quot;headerlink&quot; title=&quot;基于密钥验证登录实践&quot;&gt;&lt;/a&gt;基于密钥验证登录实践&lt;/h1&gt;&lt;p&gt;步骤很简单&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;生成本地公私钥对&lt;/li&gt;
+&lt;li&gt;本地公钥添加到remot的$HOME/.ssh/authorized_keys文件中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;本地生成密钥对&quot;&gt;&lt;a href=&quot;#本地生成密钥对&quot; class=&quot;headerlink&quot; title=&quot;本地生成密钥对&quot;&gt;&lt;/a&gt;本地生成密钥对&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也可以为自己的私钥设置密钥&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa -P &amp;quot;xxxxxx&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;添加公钥到remote&quot;&gt;&lt;a href=&quot;#添加公钥到remote&quot; class=&quot;headerlink&quot; title=&quot;添加公钥到remote&quot;&gt;&lt;/a&gt;添加公钥到remote&lt;/h2&gt;&lt;p&gt;方法1&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ssh-copy-id user@host
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;tips:&lt;/p&gt;
+&lt;p&gt;远程配置文件/etc/ssd/sshd_config去掉以下注释，然后重启ssh服务&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#RSAAuthentication yes
+#PublickeyAuthentication yes
+#AuthorizedKeyFile .ssh/authorized_keys
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;方法2&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh user@host &amp;apos;mkdir -p .ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt; .ssh/authorized_keys&amp;apos; &amp;lt; ~/.ssh/id_rsa.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;方法3&lt;/p&gt;
+&lt;p&gt;  scp id_rsa.pub user@host:.ssh/&lt;br&gt;  cat id_rsa.pub &amp;gt;&amp;gt; authorized_keys&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;权限问题可能会造成不是自己想要的结果，比如id_rsa文件group和other如果有了写权限，基于密钥的验证就会降级为基于口令&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;chmod 700 .ssh
+chmod 600 .ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参考文章：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;SSH原理与运用（一）：远程登录&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。&lt;/p&gt;
+&lt;p&gt;SSH提供了两种验证方式。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;基于口令的安全验证，知道账号和口令，输入口令可以登录到远程主机，但是每次登陆都需要输入口令，无法避免“中间人”攻击。&lt;/li&gt;
+&lt;li&gt;基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。初次登陆需要输入口令，之后登陆不需要口令。&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Bash中的快捷键</title>
     <link href="http://dupengchuan.github.io/2016/05/29/bash-shortcuts/"/>
     <id>http://dupengchuan.github.io/2016/05/29/bash-shortcuts/</id>
     <published>2016-05-29T11:43:28.000Z</published>
-    <updated>2016-05-29T12:36:21.014Z</updated>
+    <updated>2016-05-30T04:23:23.556Z</updated>
     
-    <content type="html">&lt;p&gt;生活在shell bash上的人熟记Bash中快捷键可以大大提高敲命令和查看的速度，提高工作的效率，一&lt;/p&gt;
-&lt;p&gt;下是作者常用的快捷键。记一下笔者常用的一些快捷键。&lt;/p&gt;
+    <content type="html">&lt;p&gt;生活在shell bash上的人熟记Bash中快捷键可以大大提高敲命令和查看的速度，提高工作的效率。在这人力记一下笔者常用的一些快捷键。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;光标移动&quot;&gt;&lt;a href=&quot;#光标移动&quot; class=&quot;headerlink&quot; title=&quot;光标移动&quot;&gt;&lt;/a&gt;光标移动&lt;/h1&gt;&lt;table&gt;
 &lt;thead&gt;
@@ -131,8 +204,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;生活在shell bash上的人熟记Bash中快捷键可以大大提高敲命令和查看的速度，提高工作的效率，一&lt;/p&gt;
-&lt;p&gt;下是作者常用的快捷键。记一下笔者常用的一些快捷键。&lt;/p&gt;
+      &lt;p&gt;生活在shell bash上的人熟记Bash中快捷键可以大大提高敲命令和查看的速度，提高工作的效率。在这人力记一下笔者常用的一些快捷键。&lt;/p&gt;
     
     </summary>
     

@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>SSH远程登录 · Kevin' blog</title><meta name="description" content="SSH远程登录 - Kevin"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="short icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/style.css"><!-- fonts--><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><link rel="stylesheet" href="http://fonts.lug.ustc.edu.cn/css?family=Source+Sans+Pro:400,600" type="text/css"><!-- baidu analytics--><script type="text/javascript">var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3da6a058b90a794d9abcb126661965af";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></head><body><input type="checkbox" id="sidebar-toggle"><aside><div class="author"><a href="/."><img src="/favicon.jpg" class="author-img"></a><h2 class="author-name">Kevin</h2></div><div class="post-toc"><span class="toc-title">Directory</span><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于口令的安全验证"><span class="toc-text">基于口令的安全验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于密钥的安全验证"><span class="toc-text">基于密钥的安全验证</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于密钥验证登录实践"><span class="toc-text">基于密钥验证登录实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#本地生成密钥对"><span class="toc-text">本地生成密钥对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加公钥到remote"><span class="toc-text">添加公钥到remote</span></a></li></ol></li></ol></div><div class="social"><span class="title">Social</span><ul class="links"><li class="link-item"><a href="du_pengchuan@163.com"><div class="iconfont icon-email"> </div>email</a></li><li class="link-item"><a href="https://github.com/dupengchuan"><div class="iconfont icon-github"> </div>github</a></li><li class="link-item"><a href="https://twitter.com/dupengchuan"><div class="iconfont icon-twitter"> </div>twitter</a></li><li class="link-item"><a href="http://weibo.com/pengchuandu"><div class="iconfont icon-weibo"> </div>weibo</a></li><li class="link-item"><a href="https://www.zhihu.com/people/mu-rong-chuan-38"><div class="iconfont icon-zhihu"> </div>zhihu</a></li><li class="link-item"><a href="/atom.xml"><div class="iconfont icon-rss"> </div>rss</a></li></ul></div></aside><div class="main"><header><div id="top"><a href="/." class="logo-link">Kevin' blog</a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">Home</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">Archives</a></li><li class="nav-list-item"><a href="/tags/" target="_self" class="nav-list-link">Tags</a></li><li class="nav-list-item"><a href="/about/" target="_self" class="nav-list-link">About</a></li></ul></div></header><section class="container"><div class="post"><article class="post-block"><h1 class="post-title">SSH远程登录</h1><div class="post-time">May 30, 2016</div><div class="post-content"><p>SSH为Secure Shell的缩写，是位于传输层与应用程序之间的安全传输协议，能够保证信道的安全性。SSH在*uix上的一个重要应用就是远程登录。</p>
+<p>SSH提供了两种验证方式。</p>
+<ol>
+<li>基于口令的安全验证，知道账号和口令，输入口令可以登录到远程主机，但是每次登陆都需要输入口令，无法避免“中间人”攻击。</li>
+<li>基于密钥的安全验证，客户机需要有自己的一对密钥，把公钥放在需要访问的服务服务器上。初次登陆需要输入口令，之后登陆不需要口令。</li>
+</ol>
+<a id="more"></a>
+<h1 id="基于口令的安全验证"><a href="#基于口令的安全验证" class="headerlink" title="基于口令的安全验证"></a>基于口令的安全验证</h1><p>当发送一个登陆命令时</p>
+<pre><code>ssh user@host
+</code></pre><ol>
+<li>查询$HOME/.ssh/known_host里面是否有host对应的公钥</li>
+<li>如果找到host对应的公钥，不会有是否连接远程主机的提示，客户端用公钥加密口令发功给远程主机，远程主机解密，如果口令正确则登陆成功</li>
+<li>如果没有找到host对应的公钥，则向host请求公钥，之后登陆界面会显示远程主机的指纹，是否连接</li>
+<li>如果yes，则执行步骤2，并将远程主机公钥存入$HOME/.ssh/known_host文件中，供下次使用。</li>
+</ol>
+<p>流程图如下:</p>
+<p><img src="http://img2.ph.126.net/uWUDtGxI3xhg_EE_W3cpVg==/6631698885372855341.png" alt=""></p>
+<h1 id="基于密钥的安全验证"><a href="#基于密钥的安全验证" class="headerlink" title="基于密钥的安全验证"></a>基于密钥的安全验证</h1><p>验证过程如下：</p>
+<ol>
+<li>local host将自己的公钥发送给remote host。</li>
+<li>remote host查询自己的authorized_keys文件，如果存在该公钥则给local host 发送一个chanllenge(用local host的公钥加密一个随机数)。</li>
+<li>local host使用自己的私钥加密这个随机数发送给remote</li>
+<li>remote检查随机数，确定验证公钥的合法性，给local host反馈结果。</li>
+</ol>
+<p>流程图如下：</p>
+<p><img src="http://img0.ph.126.net/nfQy6oBEaoTDnhcFBO8qZQ==/1993687260144251892.png" alt=""></p>
+<h1 id="基于密钥验证登录实践"><a href="#基于密钥验证登录实践" class="headerlink" title="基于密钥验证登录实践"></a>基于密钥验证登录实践</h1><p>步骤很简单</p>
+<ol>
+<li>生成本地公私钥对</li>
+<li>本地公钥添加到remot的$HOME/.ssh/authorized_keys文件中</li>
+</ol>
+<h2 id="本地生成密钥对"><a href="#本地生成密钥对" class="headerlink" title="本地生成密钥对"></a>本地生成密钥对</h2><pre><code>ssh-keygen -t rsa
+</code></pre><p>也可以为自己的私钥设置密钥</p>
+<pre><code>ssh-keygen -t rsa -P &quot;xxxxxx&quot;
+</code></pre><h2 id="添加公钥到remote"><a href="#添加公钥到remote" class="headerlink" title="添加公钥到remote"></a>添加公钥到remote</h2><p>方法1</p>
+<pre><code>$ssh-copy-id user@host
+</code></pre><p>tips:</p>
+<p>远程配置文件/etc/ssd/sshd_config去掉以下注释，然后重启ssh服务</p>
+<pre><code>#RSAAuthentication yes
+#PublickeyAuthentication yes
+#AuthorizedKeyFile .ssh/authorized_keys
+</code></pre><p>方法2</p>
+<pre><code>ssh user@host &apos;mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys&apos; &lt; ~/.ssh/id_rsa.pub
+</code></pre><p>方法3</p>
+<p>  scp id_rsa.pub user@host:.ssh/<br>  cat id_rsa.pub &gt;&gt; authorized_keys</p>
+<hr>
+<p>权限问题可能会造成不是自己想要的结果，比如id_rsa文件group和other如果有了写权限，基于密钥的验证就会降级为基于口令</p>
+<pre><code>chmod 700 .ssh
+chmod 600 .ssh/id_rsa
+</code></pre><p>参考文章：</p>
+<p><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html" target="_blank" rel="external">SSH原理与运用（一）：远程登录</a></p>
+</div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
+var d = document, s = d.createElement('script');
+
+s.src = '//dupengchuan.disqus.com/embed.js';
+
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script><div class="copyright"><p>© 2016<span class="heart"><i class="icon-next-heart fa fa-heart"></i></span><a href="http://dupengchuan.github.io">Kevin</a></p></div></footer></div><label for="sidebar-toggle" class="sidebar-menu"><i class="fa fa-bars"></i></label><label id="back2top"> <i class="fa fa-chevron-up"></i></label></body></html>
