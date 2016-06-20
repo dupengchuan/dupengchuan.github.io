@@ -26,7 +26,7 @@
 <p>由于MBR空间有限，MBR没有足够的空间加载从磁盘加载包含其他引导代码的扇区。这个扇区有可能是这个分区的引导扇区，但是也可以被硬编码到MBR代码区。</p>
 <p>MBR代码加上那些在第二步加载代码，然后读取一个包含bootloader第二阶段代码的文件。GRUB中是grub/stage2,Windows中是c:\NTLDR。如果步骤2失败，Windows系统你会得到像：“NTLDR is missing”。阶段2的代码读取一个启动配置文件（linux中是grub.conf，windows中是boot.ini）。然后展示用户选择启动系统的界面或者是直接启动系统（仅仅存在一个启动项）</p>
 <p>此时，bootloader代买需要启动一个内核。它必须知道文件系统是什么然后才可以去分区读取内核。在Linux中，这意味着去读取名字差不多是“vmlinuz-2.6.22-14-server”的文件，加载进内存并且跳转到内核启动代码。在WIndows2003中，一些内核启动代码和内核镜像是分开的。实际上嵌入到了NYLDR文件中。进行几个初始化之后，NTDLR才加载镜像c:\Windows\System32\ntoskrnl.exe。然后就想GRUB做的一样，跳转到内核的程序执行。</p>
-<p>这里有一个值得一提的问题（）。当前的Linux 内核镜像即使经过压缩，也不能放进RAM最开始地那640K地址空间(实模式下可访问)。我的Ubuntu内核压缩之后是1.7M。但是bootloader通过BIOS读取磁盘数据必须运行在实模式中，因此内核显然是获取不到的。解决办法就是引入了<a href="http://en.wikipedia.org/wiki/Unreal_mode" target="_blank" rel="external">虚拟模式</a>。这个并不是一个真正的处理器模式（我希望Intel的工程师被允许在这方面有兴趣），但是是一项技术，程序为了能够通过BIOS访问超过1MB以上的地址空间在实模式和保护模式之间切换。如果你读过GRUB源码，你会看到这些转换（看stage2中的real_to_prot和prot_to_real）。当BIOS将内核加载到内存中，最后处理器又会切换回实模式。</p>
+<p>这里有一个值得一提的问题（）。当前的Linux 内核镜像即使经过压缩，也不能放进RAM最开始地那640K地址空间(实模式下可访问)。我的Ubuntu内核压缩之后是1.7M。但是bootloader通过BIOS读取磁盘数据必须运行在实模式中，因此内核显然是获取不到的。解决办法就是引入了<a href="http://en.wikipedia.org/wiki/Unreal_mode" target="_blank" rel="external">虚拟模式</a>。这个并不是一个真正的处理器模式（我希望Intel的工程师被允许在这方面有兴趣），但是是一项技术，程序为了能够通过BIOS例程访问超过1MB以上的地址空间在实模式和保护模式之间切换。如果你读过GRUB源码，你会看到这些转换（看stage2中的real_to_prot和prot_to_real）。当BIOS将内核加载到内存中，最后处理器又会切换回实模式。</p>
 <p>正如图1中展示的，我们现在处在从“引导加载程序”到“早期的内核初始化”阶段。接下来的事情会变得麻烦，内核解压，动态初始化。下一篇文章是Linux内核初始化的一个介绍，我会给出源码的连接。当然Windows我不能这样做。但是我会指出值得注意的地方。</p>
 </div></article></div><script src="/js/back2top.js"></script></section><footer class="container"><section id="comments"><div id="disqus_thread"></div></section><script type="text/javascript">(function() {
 var d = document, s = d.createElement('script');
