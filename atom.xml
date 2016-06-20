@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dupengchuan.github.io/"/>
-  <updated>2016-06-20T09:54:51.263Z</updated>
+  <updated>2016-06-20T10:02:06.777Z</updated>
   <id>http://dupengchuan.github.io/</id>
   
   <author>
@@ -16,14 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Java内存管理-内存结构</title>
+    <title>Java内存管理-内存分区和对象访问方式</title>
     <link href="http://dupengchuan.github.io/2016/06/20/java-memory-management/"/>
     <id>http://dupengchuan.github.io/2016/06/20/java-memory-management/</id>
     <published>2016-06-20T06:35:07.000Z</published>
-    <updated>2016-06-20T09:54:51.263Z</updated>
+    <updated>2016-06-20T10:02:06.777Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;JAVA与c(或c++)一个重要的区别就是Java把内存管理工作交给了JVM，JVM负责内存的动态分配与回收。c或者c++开发者，必须自己去new，并且还要配对的delete/free掉内存，一旦忘记释放不用的内存，就会出现内存泄露的情况。java虽然有内存管理机制，是不是就是说java没有内存泄漏呢？并不是，之后的文章我会介绍java内存泄露的一些案例。所以说java的内存管理能够帮助程序员降低的内存泄露的风险，但不能避免。&lt;/p&gt;
-&lt;p&gt;java虚拟机的内存管理是一个复杂的过程，如果java程序员了解java虚拟机如何使用，那么将会避免一些内存泄漏和内存溢出错误，同时如果遇到内存方面的错误的时候，能够更有方向和目的的去排查。本篇博文将java内存结构，侧重在内存区域的划分上，下一篇博文主要讲解Java虚拟机的垃圾回收机制。&lt;/p&gt;
+    <content type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;对于从事C和C++程序开发的开发人员来说，在内存管理领域，他们既是拥有最高权力的皇帝，又是从事最基础工作的劳动人民—既拥有每一个对象的“所有权”，又担负着每一个对象生命开始到终结的维护责任。对于Java程序员来说，在虚拟机的自动内存管理机制的帮助下，不再需要为每一个new操作去写配对的delete/free代码，而且不容易出现内存泄漏和内存溢出问题，看起来由虚拟机管理内存一切都很美好。不过，也正是因为Java程序员把内存控制的权力交给了Java虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那排查错误将会成为一项异常艰难的工作。&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;1-内存分区&quot;&gt;&lt;a href=&quot;#1-内存分区&quot; class=&quot;headerlink&quot; title=&quot;1. 内存分区&quot;&gt;&lt;/a&gt;1. 内存分区&lt;/h1&gt;&lt;p&gt;JVM运行时，为了便于管理，会将内存划分为若干区域，每个区域各司其职，分担不同的任务。每个分区的生命周期不尽相同，有的根据进程的启动而存在（如堆，方法区），有的则是根据线程的创建而创建（如vm栈，本地方法栈，和程序计数器），随着线程的结束而销毁。主要内存区域如下图所示：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://img2.ph.126.net/4i3FlTEbGJfCClOOfshAIw==/6631768154605787498.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -40,7 +39,7 @@
 &lt;p&gt;　　对于习惯在HotSpot虚拟机上开发和部署程序的开发者来说，很多人愿意把方法区称为“永久代”（Permanent Generation），本质上两者并不等价，仅仅是因为HotSpot虚拟机的设计团队选择把GC分代收集扩展至方法区，或者说使用永久代来实现方法区而已。对于其他虚拟机（如BEA JRockit、IBM J9等）来说是不存在永久代的概念的。即使是HotSpot虚拟机本身，根据官方发布的路线图信息，现在也有放弃永久代并“搬家”至Native Memory来实现方法区的规划了。&lt;/p&gt;
 &lt;p&gt;　　Java虚拟机规范对这个区域的限制非常宽松，除了和Java堆一样不需要连续的内存和可以选择固定大小或者可扩展外，还可以选择不实现垃圾收集。相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入了方法区就如永久代的名字一样“永久”存在了。这个区域的内存回收目标主要是针对常量池的回收和对类型的卸载，一般来说这个区域的回收“成绩”比较难以令人满意，尤其是类型的卸载，条件相当苛刻，但是这部分区域的回收确实是有必要的。在Sun公司的BUG列表中，曾出现过的若干个严重的BUG就是由于低版本的HotSpot虚拟机对此区域未完全回收而导致内存泄漏。 根据Java虚拟机规范的规定，当方法区无法满足内存分配需求时，将抛出OutOfMemoryError异常。&lt;/p&gt;
 &lt;h3 id=&quot;运行时常量池&quot;&gt;&lt;a href=&quot;#运行时常量池&quot; class=&quot;headerlink&quot; title=&quot;运行时常量池&quot;&gt;&lt;/a&gt;运行时常量池&lt;/h3&gt;&lt;p&gt;运行时常量池（Runtime Constant Pool）是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述等信息外，还有一项信息是常量池（Constant Pool Table），用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后存放到方法区的运行时常量池中。 Java虚拟机对Class文件的每一部分（自然也包括常量池）的格式都有严格的规定，每一个字节用于存储哪种数据都必须符合规范上的要求，这样才会被虚拟机认可、装载和执行。但对于运行时常量池，Java虚拟机规范没有做任何细节的要求，不同的提供商实现的虚拟机可以按照自己的需要来实现这个内存区域。不过，一般来说，除了保存Class文件中描述的符号引用外，还会把翻译出来的直接引用也存储在运行时常量池中。 运行时常量池相对于Class文件常量池的另外一个重要特征是具备动态性，Java语言&lt;br&gt;并不要求常量一定只能在编译期产生，也就是并非预置入Class文件中常量池的内容才能进入方法区运行时常量池，运行期间也可能将新的常量放入池中，这种特性被开发人员利用得比较多的便是String类的intern()方法。 既然运行时常量池是方法区的一部分，自然会受到方法区内存的限制，当常量池无法再申请到内存时会抛出OutOfMemoryError异常。&lt;/p&gt;
-&lt;h1 id=&quot;2-对象访问&quot;&gt;&lt;a href=&quot;#2-对象访问&quot; class=&quot;headerlink&quot; title=&quot;2. 对象访问&quot;&gt;&lt;/a&gt;2. 对象访问&lt;/h1&gt;&lt;p&gt;介绍完Java虚拟机的运行时数据区之后，我们就可以来探讨一个问题：在Java语言中，对象访问是如何进行的？对象访问在Java语言中无处不在，是最普通的程序行为，但即使是最简单的访问，也会却涉及Java栈、Java堆、方法区这三个最重要内存区域之间的关联关系，如下面的这句代码：&lt;/p&gt;
+&lt;h1 id=&quot;2-对象访问方式&quot;&gt;&lt;a href=&quot;#2-对象访问方式&quot; class=&quot;headerlink&quot; title=&quot;2. 对象访问方式&quot;&gt;&lt;/a&gt;2. 对象访问方式&lt;/h1&gt;&lt;p&gt;介绍完Java虚拟机的运行时数据区之后，我们就可以来探讨一个问题：在Java语言中，对象访问是如何进行的？对象访问在Java语言中无处不在，是最普通的程序行为，但即使是最简单的访问，也会却涉及Java栈、Java堆、方法区这三个最重要内存区域之间的关联关系，如下面的这句代码：&lt;/p&gt;
 &lt;p&gt;　　　　　　　　　　Object obj = new Object();&lt;/p&gt;
 &lt;p&gt;假设这句代码出现在方法体中，那“Object obj”这部分的语义将会反映到Java栈的本地变量表中，作为一个reference类型数据出现。而“new Object()”这部分的语义将会反映到Java堆中，形成一块存储了Object类型所有实例数据值（Instance Data，对象中各个实例字段的数据）的结构化内存，根据具体类型以及虚拟机实现的对象内存布局（Object Memory Layout）的不同，这块内存的长度是不固定的。另外，在Java堆中还必须包含能查找到此对象类型数据（如对象类型、父类、实&lt;br&gt;现的接口、方法等）的地址信息，这些类型数据则存储在方法区中。&lt;/p&gt;
 &lt;p&gt;　　由于reference类型在Java虚拟机规范里面只规定了一个指向对象的引用，并没有定义这个引用应该通过哪种方式去定位，以及访问到Java堆中的对象的具体位置，因此不同虚拟机实现的对象访问方式会有所不同，主流的访问方式有两种：使用句柄和直接指针。 如果使用句柄访问方式，Java堆中将会划分出一块内存来作为句柄池，reference中存储的就是对象的句柄地址，而句柄中包含了对象实例数据和类型数据各自的具体地址信息，如下图所示：&lt;/p&gt;
@@ -79,8 +78,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;JAVA与c(或c++)一个重要的区别就是Java把内存管理工作交给了JVM，JVM负责内存的动态分配与回收。c或者c++开发者，必须自己去new，并且还要配对的delete/free掉内存，一旦忘记释放不用的内存，就会出现内存泄露的情况。java虽然有内存管理机制，是不是就是说java没有内存泄漏呢？并不是，之后的文章我会介绍java内存泄露的一些案例。所以说java的内存管理能够帮助程序员降低的内存泄露的风险，但不能避免。&lt;/p&gt;
-&lt;p&gt;java虚拟机的内存管理是一个复杂的过程，如果java程序员了解java虚拟机如何使用，那么将会避免一些内存泄漏和内存溢出错误，同时如果遇到内存方面的错误的时候，能够更有方向和目的的去排查。本篇博文将java内存结构，侧重在内存区域的划分上，下一篇博文主要讲解Java虚拟机的垃圾回收机制。&lt;/p&gt;
+      &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;对于从事C和C++程序开发的开发人员来说，在内存管理领域，他们既是拥有最高权力的皇帝，又是从事最基础工作的劳动人民—既拥有每一个对象的“所有权”，又担负着每一个对象生命开始到终结的维护责任。对于Java程序员来说，在虚拟机的自动内存管理机制的帮助下，不再需要为每一个new操作去写配对的delete/free代码，而且不容易出现内存泄漏和内存溢出问题，看起来由虚拟机管理内存一切都很美好。不过，也正是因为Java程序员把内存控制的权力交给了Java虚拟机，一旦出现内存泄漏和溢出方面的问题，如果不了解虚拟机是怎样使用内存的，那排查错误将会成为一项异常艰难的工作。&lt;/p&gt;
     
     </summary>
     
